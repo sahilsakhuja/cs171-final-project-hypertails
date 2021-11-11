@@ -1,4 +1,10 @@
 
+
+let worldVis;
+let top5hyperVis;
+let commodityVis;
+let increaseVis;
+
 // Margin object with properties for the four directions
 let margin = {top: 20, right: 10, bottom: 20, left: 10};
 

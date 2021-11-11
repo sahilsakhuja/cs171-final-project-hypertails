@@ -43,3 +43,21 @@ b {
 li {
   color: var(--earth-yellow)
 }
+
+
+/*********************************
+
+CUSTOM STYLES
+
+*********************************/
+
+#worldVis {
+  height: 50vh;
+  width: 100wh;
+}
+
+#top5hyper, #commodityinflation, #firstincrease {
+  height: 50vh;
+  width: 50wh;
+}
+
