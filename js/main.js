@@ -75,11 +75,10 @@ function categoryChange() {
 
 let selectedCategoryEl = document.getElementById('categorySelector');
 selectedCategoryEl.addEventListener('change', function (event) {
-    // initMainPage(initialData);
-    //top5hyperVis.line.exit().remove();
-    let paths = document.querySelectorAll("path");
+
+    /*let paths = document.querySelectorAll("path");
     let lastPath = paths[paths.length - 1];
-    lastPath.style.display = "none";
+    lastPath.style.display = "none";*/
 
     top5hyperVis.updateVis();
 })

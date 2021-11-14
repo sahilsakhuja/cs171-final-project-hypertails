@@ -16,7 +16,7 @@ class topHyperVis {
         //vis.width = 500;
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width+200 - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
-
+        console.log(vis.height)
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -45,6 +45,13 @@ class topHyperVis {
         vis.svg.append("g")
             .attr("class", "y-axis axis");
 
+        vis.top5linechart = vis.svg.append('path')
+            .attr('class', 'line')
+
+        vis.top5line = d3.line()
+            .x(function(d) { return vis.x(d.year); })
+            .y(function(d) { return vis.y(d[selectedCategory]); })
+            .curve(d3.curveLinear);
 
         vis.svg.append("text")
             .attr("x", -35)
@@ -107,36 +114,14 @@ class topHyperVis {
             return d[selectedCategory];
         })));
 
-
-
-
-        let xData = vis.filteredInflation.map(function (d) {
-            return d.year;
-        });
-
-        let yData = vis.filteredInflation.map(function (d) {
-            return d[selectedCategory];
-        });
-
-
-        vis.top5line = vis.svg.append("path")
-            .datum(vis.filteredInflation);
-
-        vis.top5line.enter()
-            .append()
-            .merge(vis.top5line)
+        vis.top5linechart
+            .transition()
+            .duration(800)
+            .attr('d', vis.top5line(vis.filteredInflation))
             .attr("fill", "none")
-            .attr("stroke", "salmon")
-            .attr("stroke-width", 1.5)
-            .transition().duration(3000).delay(500)
-            .attr("d", d3.line()
-                .x(function(d) { return vis.x(d.year)})
-                .y(function(d) { return vis.y(d[selectedCategory]) }))
+            .attr('stroke', 'salmon')
 
 
-
-
-        vis.top5line.exit().remove();
 
         // Update y-axis
         vis.svg.select(".y-axis")

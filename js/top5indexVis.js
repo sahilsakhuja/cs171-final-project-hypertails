@@ -1,4 +1,4 @@
-/*class topIndexVis {
+class topIndexVis {
 
     constructor(parentElement, countryindex) {
         this.parentElement = parentElement;
@@ -57,7 +57,7 @@
 
         let parseTime = d3.timeParse("%m/%d/%Y");
 
-        for (let item of vis.countryindex) {
+        /*for (let item of vis.countryindex) {
             let year = parseTime(item["Year"]);
             let country = item['Country'];
             let cpi_all = parseFloat(parseFloat(item['Consumer Price Index, All items']).toFixed(2));
@@ -96,10 +96,10 @@
 
             }
             filteredIndexData.push(newItem)
-        };
-        console.log(filteredIndexData)
+        };*/
+        //console.log(filteredIndexData)
 
-        vis.filteredIndex = filteredIndexData;
+       // vis.filteredIndex = filteredIndexData;
 
 
 
@@ -110,25 +110,25 @@
     updateVis(){
 
 
-        let selectedCategoryEl = document.getElementById("categorySelector");
-        let selectedCategory = selectedCategoryEl.value;
+        //let selectedCategoryEl = document.getElementById("categorySelector");
+        //let selectedCategory = selectedCategoryEl.value;
 
         let vis = this;
 
 
         // (1) Update domain
-        vis.x.domain(d3.extent(vis.filteredIndex.map(function (d){
+        /*vis.x.domain(d3.extent(vis.filteredIndex.map(function (d){
             return d.year;
         })))
 
         vis.y.domain(d3.extent(vis.filteredIndex.map(function (d) {
             return d[selectedCategory];
-        })));
+        })));*/
 
 
 
 
-        let xData = vis.filteredIndex.map(function (d) {
+        /*let xData = vis.filteredIndex.map(function (d) {
             return d.year;
         });
 
@@ -154,7 +154,7 @@
 
 
 
-        vis.top5line.exit().remove();
+        vis.top5line.exit().remove();*/
 
         // Update y-axis
         vis.svg.select(".y-axis")
@@ -168,4 +168,4 @@
 
     }
 
-}*/
+}
