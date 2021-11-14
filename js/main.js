@@ -60,10 +60,7 @@ function initMainPage(dataArray) {
 let selectedCategory = document.getElementById('categorySelector').value;
 function categoryChange() {
     selectedCategory = document.getElementById('categorySelector').value;
-    /*myMapVis.wrangleData(); // maybe you need to change this slightly depending on the name of your MapVis instance
-    myBarVisOne.wrangleData();
-    myBarVisTwo.wrangleData();
-    myBrushVis.wrangleData();*/
+
 }
 
 let selectedCategoryEl = document.getElementById('categorySelector');

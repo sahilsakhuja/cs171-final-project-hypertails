@@ -12,8 +12,8 @@ class topHyperVis {
 
         let vis = this;
 
+        // Adjust by screen size
         vis.margin = {top: 20, right: 20, bottom: 20, left: 40};
-        //vis.width = 500;
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width+200 - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
@@ -25,7 +25,7 @@ class topHyperVis {
             .append('g')
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
-
+        // Add x-axis & y-axis
         vis.x = d3.scaleTime()
             .range([0, vis.width]);
 
@@ -48,16 +48,20 @@ class topHyperVis {
         vis.top5linechart = vis.svg.append('path')
             .attr('class', 'line')
 
+        // Create line chart
         vis.top5line = d3.line()
             .x(function(d) { return vis.x(d.year); })
             .y(function(d) { return vis.y(d[selectedCategory]); })
             .curve(d3.curveLinear);
 
+        // Add y-axis text
         vis.svg.append("text")
             .attr("x", -35)
             .attr("y", 0)
             .text("(%)");
 
+        vis.tooltip_box = vis.svg.append("g")
+            .style("display", "none");
 
 
 
@@ -73,6 +77,7 @@ class topHyperVis {
 
         let parseTime = d3.timeParse("%Y");
 
+        // Convert strings to datetime object and float
         for (let item of vis.inflation) {
             let year = parseTime(item["Year"]);
             let angola = parseFloat(parseFloat(item['Angola']).toFixed(2));
@@ -107,7 +112,7 @@ class topHyperVis {
         let vis = this;
 
 
-        // (1) Update domain
+        // Update domain
         vis.x.domain(d3.extent(vis.filteredInflation.map(function (d){
             return d.year;
         })))
@@ -116,6 +121,7 @@ class topHyperVis {
             return d[selectedCategory];
         })));
 
+        // Update line chart
         vis.top5linechart
             .transition()
             .duration(800)
@@ -123,7 +129,7 @@ class topHyperVis {
             .attr("fill", "none")
             .attr('stroke', 'salmon')
 
-
+        // Add circle to line chart
         vis.circles = vis.svg.selectAll('.tooltipCircle')
             .data(vis.filteredInflation, function (d) { return d.year; })
 
@@ -141,9 +147,7 @@ class topHyperVis {
             .attr('fill', 'red')
             .attr('r', 3)
 
-
         vis.circles.exit().remove()
-
 
 
         // Update y-axis
