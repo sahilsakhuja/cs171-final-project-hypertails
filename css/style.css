@@ -61,3 +61,30 @@ CUSTOM STYLES
   width: 50wh;
 }
 
+.bigger {
+  font-size: 32px;
+  color: var(--candy-pink)
+}
+
+.bold {
+  font-weight: bold;
+  color: var(--candy-pink)
+}
+
+.x-axis {
+  font-size: 12px;
+}
+
+.y-axis {
+  font-size: 12px;
+}
+
+h5 {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div{
+  margin-bottom: 10px;
+}
+
