@@ -16,7 +16,7 @@ class topHyperVis {
         //vis.width = 500;
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width+200 - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
-        console.log(vis.height)
+
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -57,6 +57,8 @@ class topHyperVis {
             .attr("x", -35)
             .attr("y", 0)
             .text("(%)");
+
+
 
 
         this.wrangleData();
@@ -120,6 +122,27 @@ class topHyperVis {
             .attr('d', vis.top5line(vis.filteredInflation))
             .attr("fill", "none")
             .attr('stroke', 'salmon')
+
+
+        vis.circles = vis.svg.selectAll('.tooltipCircle')
+            .data(vis.filteredInflation, function (d) { return d.year; })
+
+        vis.circles.enter().append('circle')
+            .attr('class', 'tooltipCircle')
+            .merge(vis.circles)
+            .attr('cx', function (d) {
+                return vis.x(d.year);
+            })
+            .attr('cy', function (d) {
+                return vis.y(d[selectedCategory]);
+            })
+            .transition()
+            .delay(1000)
+            .attr('fill', 'red')
+            .attr('r', 3)
+
+
+        vis.circles.exit().remove()
 
 
 

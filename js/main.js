@@ -2,7 +2,6 @@
 
 let worldVis;
 let top5hyperVis;
-let top5IndexVis;
 let commodityVis;
 let increaseVis;
 
@@ -34,11 +33,6 @@ let padding = 30;
 let promises = [
 
     d3.csv("data/Top5_hyperinflation.csv"),
-    /*d3.csv("data/IMF_Angola_index.csv"),
-    d3.csv("data/IMF_Bulgaria_index.csv"),
-    d3.csv("data/IMF_Sudan_index.csv"),
-    d3.csv("data/IMF_Turkey_index.csv"),
-    d3.csv("data/IMF_Zimbabwe_index.csv")*/
     d3.csv("data/IMF_all_index.csv")
 
 ];
@@ -58,7 +52,6 @@ function initMainPage(dataArray) {
     console.log(dataArray[0])
 
     top5hyperVis = new topHyperVis ('top5hyper', dataArray[0])
-    top5IndexVis = new topIndexVis ('top5index', dataArray[1])
     console.log(dataArray[1])
 
 }
