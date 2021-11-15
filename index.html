@@ -26,6 +26,16 @@
 
 		<div class="row">
 			<div class="col-12">
+				Hook: Inflation rate growth in Sudan
+			</div>
+			<div class="col-12" id="hookVis">
+
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-12">
 				World Map Viz with Slider for time pick
 			</div>
 			<div class="col-12" id="worldVis">
@@ -34,27 +44,78 @@
 		</div>
 
 		<div class="row">
-			<div class="col-6">
-				Some text here describing hyperinflation
+			<div class="col-6" id="inflation_text">
+				<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
+					in an economy, typically more than <span class="bigger">50%</span> per month.</p>
+				<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
+					It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
+					never been an issue to developed countries such as US or UK.
+					</br>
+					</br>
+					However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
+					to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
+					from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
+					are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
+					the currency value, and the future consumer spending.
+					</br>
+					</br>
 			</div>
-			<div class="col-6" id="top5hyper">
+			<div class="col-6">
+				<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
+					in an economy, typically more than <span class="bigger">50%</span> per month.</p>
+				<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
+					It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
+					never been an issue to developed countries such as US or UK.
+					</br>
+					</br>
+					However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
+					to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
+					from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
+					are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
+					the currency value, and the future consumer spending.
+					</br>
+					</br>
+
+
+				</p>
 
 			</div>
+
+
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<h5>Top 5 Hyperinflation Countries</h5></br>
+				<select id='categorySelector' class="custom-select align-self-center" style="width: 50%" onchange="categoryChange()">
+					<option value="angola">Angola</option>
+					<option value="bulgaria">Bulgaria</option>
+					<option value="sudan" selected>Sudan</option>
+					<option value="turkey">Turkey</option>
+					<option value="zimbabwe">Zimbabwe</option>
+
+				</select>
+				<p>
+
+				</p>
+				<div id="top5hyper"></div>
+
+			</div>
+
 		</div>
 
 		<div class="row">
-			<div class="col-6" id="commodityinflation">
+			<div class="col-9" id="commodityinflation">
 			</div>
-			<div class="col-6">
+			<div class="col-3">
 				Some text here for commodity inflation
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-6">
+			<div class="col-3">
 				Text here for first increase vs last increase
 			</div>
-			<div class="col-6" id="firstincrease">
+			<div class="col-9" id="firstincrease">
 			</div>
 		</div>
 
@@ -67,6 +128,9 @@
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 
 	<!-- own js files -->
+	<script src="js/commodityVis.js"></script>
+	<script  src="js/top5hyperVis.js"></script>
+	<script src="js/donutVis.js"></script>
 	<script src="js/main.js"></script>
 	</body>
 </html>
