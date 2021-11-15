@@ -5,22 +5,80 @@ let top5hyperVis;
 let commodityVis;
 let increaseVis;
 
-// Margin object with properties for the four directions
-let margin = {top: 20, right: 10, bottom: 20, left: 10};
 
-// Width and height as the inner dimensions of the chart area
-// changed width to support 2 plots
-let width = 1400 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+data_files = [
+    {
+        'idx': 0,
+        'file': "data/imf_sudan_rawdata.csv",
+        'type': 'csv',
+        'name': 'increaseVis_rawData'
+    },
+    {
+        'idx': 1,
+        'file': "data/weights_sudan.json",
+        'type': 'json',
+        'name': 'increaseVis_weights'
+    },
+    {
+        'idx': 2,
+        'file': "data/Top5_hyperinflation.csv",
+        'type': 'csv',
+        'name': 'Top5_hyperinflation'
+    },
+    {
+        'idx': 3,
+        'file': "data/IMF_all_index.csv",
+        'type': 'csv',
+        'name': 'IMF_all_index'
+    }
+]
 
-let plot_width = 700 - margin.left - margin.right,
-  plot_height = 500 - margin.top - margin.bottom;
+let promises = data_files.map((f) => {
+    if (f.type == 'csv')
+        return d3.csv(f.file);
+    else if (f.type == 'json')
+        return d3.json(f.file);
+});
 
-// Define 'svg' as a child-element (g) from the drawing area and include spaces
-let svg = d3.select("#chart-area").append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+Promise.all(promises)
+    .then( function(data){ initMainPage(data) })
+    .catch( function (err){console.log(err)} );
 
-let padding = 30;
+function get_file_idx(name) {
+    return data_files.filter((f) => f.name == name)[0]['idx'];
+}
+
+// initMainPage
+function initMainPage(allDataArray) {
+
+    // log data
+    // console.log(allDataArray);
+
+    // load increase vis
+    increaseVis = new donutVis('firstincrease',
+        allDataArray[get_file_idx('increaseVis_rawData')],
+        allDataArray[get_file_idx('increaseVis_weights')]
+    );
+
+    top5hyperVis = new topHyperVis ('top5hyper',
+        allDataArray[get_file_idx('Top5_hyperinflation')]
+    );
+
+}
+
+
+let selectedCategory = document.getElementById('categorySelector').value;
+function categoryChange() {
+    selectedCategory = document.getElementById('categorySelector').value;
+
+}
+
+let selectedCategoryEl = document.getElementById('categorySelector');
+selectedCategoryEl.addEventListener('change', function (event) {
+
+    /*let paths = document.querySelectorAll("path");
+    let lastPath = paths[paths.length - 1];
+    lastPath.style.display = "none";*/
+
+    top5hyperVis.updateVis();
+})

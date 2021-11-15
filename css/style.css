@@ -57,7 +57,72 @@ CUSTOM STYLES
 }
 
 #top5hyper, #commodityinflation, #firstincrease {
-  height: 50vh;
-  width: 50wh;
+  height: 75vh;
+  width: 75wh;
 }
 
+/*********************************
+
+ANDREW
+
+*********************************/
+
+#commodityinflation {
+  margin-left:0px;
+  width:100%;
+}
+
+/*********************************
+
+SAHIL
+
+*********************************/
+
+.legend-text {
+  font-size: 12px;
+}
+
+.legend-text:hover, .legend-rect:hover {
+  cursor: pointer;
+}
+
+.brush-path {
+  fill: var(--davys-grey);
+  stroke: var(--earth-yellow);
+}
+
+/*********************************
+
+JANICE
+
+*********************************/
+
+.bigger {
+  font-size: 32px;
+  color: var(--candy-pink)
+}
+
+.bold {
+  font-weight: bold;
+  color: var(--candy-pink)
+}
+
+.x-axis {
+  font-size: 12px;
+}
+
+.y-axis {
+  font-size: 12px;
+}
+
+h5 {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+div{
+  margin-bottom: 10px;
+}
+© 2021 GitHub, Inc.
+Terms
+Privac
