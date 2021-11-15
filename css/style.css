@@ -16,8 +16,11 @@ body {
   margin-top: 20px;
 }
 
-h1 {
+/* h1 {
   color: var(--candy-pink);
+} */
+h1 {
+  color:black
 }
 
 .section-title {
@@ -123,6 +126,3 @@ h5 {
 div{
   margin-bottom: 10px;
 }
-© 2021 GitHub, Inc.
-Terms
-Privac

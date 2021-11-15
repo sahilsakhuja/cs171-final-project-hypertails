@@ -9,120 +9,115 @@
 		<!-- Load CSS libraries -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css'><link rel="stylesheet" href="css/fullpage.css">
 
 		<!-- GOOGLE FONTS -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,400italic,300italic' rel='stylesheet' type='text/css'>
 	</head>
 
 	<body>
-	<div class="container">
-		<div class="row">
-			<div class="col-12 text-center main-title">
-				<h1>Exploring Hyperinflation</h1>
-			</div>
-		</div>
+		<div id="fullpage">
+			<section class="vertical-scrolling">
+			  <h1>Title Page</h1>
+			  <div class="scroll-icon">
+				<p>Jump to Authors</p>
+				<a href="#conclusion" class="icon-up-open-big"></a>
+			  </div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-12 text-center main-title">
+						<h1>Exploring Hyperinflation</h1>
+					</div>
+				</div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-12">
+						<h1> Hook: Inflation rate growth in Sudan</h1>
+					</div>
+					<div class="col-12" id="hookVis">
+		
+					</div>
+				</div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-12">
+						<h1>World Map Viz with Slider for time pick</h1>
+					</div>
+					<div class="col-12" id="worldVis">
+		
+					</div>
+				</div>
+			</section>
 
-		<hr>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-6" id="inflation_text">
+						<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
+							in an economy, typically more than <span class="bigger">50%</span> per month.</p>
+						<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
+							It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
+							never been an issue to developed countries such as US or UK.
+							</br>
+							</br>
+							However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
+							to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
+							from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
+							are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
+							the currency value, and the future consumer spending.
+							</br>
+							</br>
+					</div>
+					<div class="col-6">
+						<h5>Top 5 Hyperinflation Countries</h5></br>
+						<select id='categorySelector' class="custom-select align-self-center" style="width: 50%" onchange="categoryChange()">
+							<option value="angola">Angola</option>
+							<option value="bulgaria">Bulgaria</option>
+							<option value="sudan" selected>Sudan</option>
+							<option value="turkey">Turkey</option>
+							<option value="zimbabwe">Zimbabwe</option>
+						</select>
+						<p>
+						</p>
+						<div id="top5hyper"></div>
+					</div>
+				</div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-9" id="commodityinflation">
+					</div>
+					<div class="col-3">
+						Some text here for commodity inflation
+					</div>
+				</div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-3">
+						Text here for first increase vs last increase
+					</div>
+					<div class="col-9" id="firstincrease">
+					</div>
+				</div>
+			</section>
+			<section class="vertical-scrolling">
+				<div class="row">
+					<div class="col-3">
+						<h1> Conclusion</h1>
+					</div>
+					<div class="col-9" id="firstincrease">
+					</div>
+				</div>
+			</section>
+		  </div>
 
-		<div class="row">
-			<div class="col-12">
-				Hook: Inflation rate growth in Sudan
-			</div>
-			<div class="col-12" id="hookVis">
-
-			</div>
-		</div>
-
-
-		<div class="row">
-			<div class="col-12">
-				World Map Viz with Slider for time pick
-			</div>
-			<div class="col-12" id="worldVis">
-
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-6" id="inflation_text">
-				<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
-					in an economy, typically more than <span class="bigger">50%</span> per month.</p>
-				<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
-					It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
-					never been an issue to developed countries such as US or UK.
-					</br>
-					</br>
-					However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
-					to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
-					from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
-					are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
-					the currency value, and the future consumer spending.
-					</br>
-					</br>
-			</div>
-			<div class="col-6">
-				<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
-					in an economy, typically more than <span class="bigger">50%</span> per month.</p>
-				<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
-					It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
-					never been an issue to developed countries such as US or UK.
-					</br>
-					</br>
-					However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
-					to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
-					from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
-					are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
-					the currency value, and the future consumer spending.
-					</br>
-					</br>
-
-
-				</p>
-
-			</div>
-
-
-		</div>
-		<div class="row">
-			<div class="col-6">
-				<h5>Top 5 Hyperinflation Countries</h5></br>
-				<select id='categorySelector' class="custom-select align-self-center" style="width: 50%" onchange="categoryChange()">
-					<option value="angola">Angola</option>
-					<option value="bulgaria">Bulgaria</option>
-					<option value="sudan" selected>Sudan</option>
-					<option value="turkey">Turkey</option>
-					<option value="zimbabwe">Zimbabwe</option>
-
-				</select>
-				<p>
-
-				</p>
-				<div id="top5hyper"></div>
-
-			</div>
-
-		</div>
-
-		<div class="row">
-			<div class="col-9" id="commodityinflation">
-			</div>
-			<div class="col-3">
-				Some text here for commodity inflation
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-3">
-				Text here for first increase vs last increase
-			</div>
-			<div class="col-9" id="firstincrease">
-			</div>
-		</div>
-
-  </div>
 
 	<!-- embedding JS libraries -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js'></script>
 
 	<!-- d3 -->
 	<script src="https://d3js.org/d3.v7.min.js"></script>
@@ -132,5 +127,9 @@
 	<script  src="js/top5hyperVis.js"></script>
 	<script src="js/donutVis.js"></script>
 	<script src="js/main.js"></script>
+
+	<!-- fullPage -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.min.js'></script><script  src="./js/fullpage.js"></script>
+	
 	</body>
 </html>
