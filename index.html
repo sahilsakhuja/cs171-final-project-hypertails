@@ -25,12 +25,37 @@
 		<hr>
 
 		<div class="row">
-			<div class="col-12">
-				Hook: Inflation rate growth in Sudan
-			</div>
-			<div class="col-12" id="hookVis">
+			<div class="col-9" id="hookVis">
+				<div class="form-check form-check-inline">
+					<label>
+						Time Period:
+					</label>
+					<input type="number" maxlength="4" id="time-min" placeholder=""> -
+					<input type="number" maxlength="4" id="time-max" placeholder="">
+					<span id="time-selection" class="btn btn-secondary" onclick="updateTime()">Filter
+
+					</span>
+				</div>
+				<!---<h3>Year
+					<span id="slider-textmin">0</span> - <span id="slider-textmax">0</span>
+				</h3>
+				<div id="slider" class="d3-slider d3-slider-horizontal"></div>-->
+
+
 
 			</div>
+			<div class="col-3">
+				<h3>What's Going On In Sudan?</h3>
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+				Hook: Inflation rate growth in Sudan
+
+			</div>
+
 		</div>
 
 
@@ -126,10 +151,12 @@
 
 	<!-- d3 -->
 	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="js/d3.slider.js"></script>
 
 	<!-- own js files -->
 	<script src="js/commodityVis.js"></script>
 	<script  src="js/top5hyperVis.js"></script>
+	<script src="js/areaVis.js"></script>
 	<script src="js/donutVis.js"></script>
 	<script src="js/main.js"></script>
 	</body>

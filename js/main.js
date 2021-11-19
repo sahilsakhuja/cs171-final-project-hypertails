@@ -2,6 +2,7 @@
 
 let worldVis;
 let top5hyperVis;
+let areaVis;
 let commodityVis;
 let increaseVis;
 
@@ -30,6 +31,18 @@ data_files = [
         'file': "data/IMF_all_index.csv",
         'type': 'csv',
         'name': 'IMF_all_index'
+    },
+    {
+        'idx': 4,
+        'file': "data/IMF_Sudan_index_cpi.csv",
+        'type': 'csv',
+        'name': 'IMF_Sudan_index_cpi'
+    },
+    {
+        'idx': 5,
+        'file': "data/Sudan_exchange_rate.csv",
+        'type': 'csv',
+        'name': 'Sudan_exchange_rate'
     }
 ]
 
@@ -63,6 +76,12 @@ function initMainPage(allDataArray) {
     top5hyperVis = new topHyperVis ('top5hyper',
         allDataArray[get_file_idx('Top5_hyperinflation')]
     );
+
+    areaVis = new AreaVis('hookVis',
+        allDataArray[get_file_idx('IMF_Sudan_index_cpi')],
+        allDataArray[get_file_idx('Sudan_exchange_rate')]
+    );
+
 
 }
 

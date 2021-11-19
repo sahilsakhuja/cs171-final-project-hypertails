@@ -98,6 +98,7 @@ class topHyperVis {
         };
 
         vis.filteredInflation = filteredData;
+        console.log(vis.filteredInflation)
 
         vis.updateVis()
 

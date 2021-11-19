@@ -115,6 +115,7 @@ JANICE
   font-size: 12px;
 }
 
+
 h5 {
   font-weight: bold;
   text-decoration: underline;
@@ -123,6 +124,13 @@ h5 {
 div{
   margin-bottom: 10px;
 }
+
+.tooltipbox {
+  fill: none;
+  pointer-events: all;
+}
+
+
 © 2021 GitHub, Inc.
 Terms
 Privac
