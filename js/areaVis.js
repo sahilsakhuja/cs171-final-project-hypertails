@@ -17,7 +17,7 @@ class AreaVis {
         // Adjust by screen size
         vis.margin = {top: 20, right: 50, bottom: 20, left: 50};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-        vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height+400 - vis.margin.top - vis.margin.bottom;
+        vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height+200 - vis.margin.top - vis.margin.bottom;
 
 
         // init drawing area
@@ -88,7 +88,7 @@ class AreaVis {
 
         // Add right y-axis text
         vis.svg.append("text")
-            .attr("x", vis.width-5)
+            .attr("x", vis.width-18)
             .attr("y", -5)
             .text("SDG/USD")
             .style("font-size", "12px")
@@ -138,6 +138,8 @@ class AreaVis {
         vis.svg.append('circle').classed('hoverPoint-line', true);
 
         vis.formatDate = d3.timeFormat('%Y')
+
+
 
         this.wrangleData();
 
@@ -223,6 +225,7 @@ class AreaVis {
                 .y0(vis.height)
                 .y1(function(d) { return vis.yScaleL(d.cpi) })
             )
+
 
 
 
@@ -325,6 +328,7 @@ class AreaVis {
             .attr('stroke', 'black')
              .attr("stroke-width", 1.5)
 
+
         /*let time_period = d3.extent(vis.sudan_cpi, function (d) {
             return d.year;
         })
@@ -361,6 +365,8 @@ class AreaVis {
 
         // Update x-axis
         vis.svg.select(".x-axis").call(vis.xAxis);
+
+
 
 
 

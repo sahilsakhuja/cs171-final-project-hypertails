@@ -130,6 +130,26 @@ div{
   pointer-events: all;
 }
 
+#hook-text {
+  opacity: 0;
+  background-color: lightgrey;
+  padding: 10px;
+  margin-top: 10px;
+  -webkit-animation: fade_effect 2s;
+  animation-fill-mode: forwards;
+}
+
+#hookVis {
+  opacity: 0;
+  -webkit-animation: fade_effect 2s;
+  animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes fade_effect {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 
 © 2021 GitHub, Inc.
 Terms
