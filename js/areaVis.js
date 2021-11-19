@@ -294,7 +294,7 @@ class AreaVis {
                 .attr('y', selectedExch)
                 .attr('dx', 10)
                 .style('fill', 'blue')
-                .text('Rate: ' + selectedExch)
+                .text('Exchange Rate: ' + selectedExch)
 
             // Update hover point when mouse moves
             vis.svg.selectAll('.hoverPoint-line')
