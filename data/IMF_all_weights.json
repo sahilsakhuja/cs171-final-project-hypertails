@@ -1,0 +1,72 @@
+{
+  "Sudan": {
+  "Food and non-alcoholic beverages": 61.969439408874,
+  "Alcoholic Beverages, Tobacco, and Narcotics": 0.710646541106,
+  "Clothing and footwear": 4.902203292308,
+  "Housing, Water, Electricity, Gas and Other Fuels": 10.211819398094,
+  "Furnishings, household equipment and routine household maintenance": 5.506483312411,
+  "Health": 0.920025181414,
+  "Transport": 6.907521347558,
+  "Communication": 1.073792151066,
+  "Recreation and culture": 1.757430852377,
+  "Education": 1.994934792222,
+  "Restaurants and hotels": 1.872579350102,
+  "Miscellaneous goods and services": 2.173124372468
+},
+  "Angola": {
+    "Food and non-alcoholic beverages": 47.1081667015857,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 2.13082438645307,
+    "Clothing and footwear": 6.38640105091012,
+    "Housing, Water, Electricity, Gas and Other Fuels": 10.7685219486781,
+    "Furnishings, household equipment and routine household maintenance": 6.59389275971294,
+    "Health": 3.49774925071004,
+    "Transport": 7.67818126714744,
+    "Communication": 3.1944527742554,
+    "Recreation and culture": 2.2628613939921,
+    "Education": 1.888882856623,
+    "Restaurants and hotels": 3.13215528785237,
+    "Miscellaneous goods and services": 5.35791032207971
+  },
+  "Bulgaria": {
+    "Food and non-alcoholic beverages": 32.0868914678941,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 5.1588875463119,
+    "Clothing and footwear": 3.67299831936391,
+    "Housing, Water, Electricity, Gas and Other Fuels": 17.4095647150768,
+    "Furnishings, household equipment and routine household maintenance": 5.10049201528754,
+    "Health": 8.18604117414308,
+    "Transport": 8.9657079772895,
+    "Communication": 5.58642247437417,
+    "Recreation and culture": 4.30589988377948,
+    "Education": 0.587793251822316,
+    "Restaurants and hotels": 4.12503725450188,
+    "Miscellaneous goods and services": 4.81426392015529
+  },
+  "Turkey": {
+    "Food and non-alcoholic beverages": 259.439,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 48.766,
+    "Clothing and footwear": 58.697,
+    "Housing, Water, Electricity, Gas and Other Fuels": 153.568,
+    "Furnishings, household equipment and routine household maintenance": 86.412,
+    "Health": 32.493,
+    "Transport": 154.948,
+    "Communication": 46.438,
+    "Recreation and culture": 30.08,
+    "Education": 22.781,
+    "Restaurants and hotels": 59.115,
+    "Miscellaneous goods and services": 47.263
+  },
+  "Zimbabwe": {
+    "Food and non-alcoholic beverages": 31.3,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 4.9,
+    "Clothing and footwear": 4.3,
+    "Housing, Water, Electricity, Gas and Other Fuels": 27.6,
+    "Furnishings, household equipment and routine household maintenance": 5.3,
+    "Health": 1.4,
+    "Transport": 8.4,
+    "Communication": 2.7,
+    "Recreation and culture": 2.3,
+    "Education": 4.3,
+    "Restaurants and hotels": 1.1,
+    "Miscellaneous goods and services": 6.5
+  }
+}

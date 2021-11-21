@@ -1,3 +1,10 @@
+<!---------------
+
+Creators: Janice Ly Pham, Andrew Ting, Sahil Sakhuja
+Special Mention: Section based scrolling implemented by Andrew Ting
+
+---------------->
+
 <!doctype html>
 <html>
 <head>
@@ -18,37 +25,103 @@
 <body>
 <div id="fullpage">
 	<section class="vertical-scrolling">
-		<h1>Title Page</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1>HyperInflation: In the US and Around the World!</h1>
+					<img src="img/Header_Tweets.png" style="width: 100vh;" />
+				</div>
+			</div>
+		</div>
 		<div class="scroll-icon">
-			<p>Jump to Authors</p>
-			<a href="#eigthSection" class="icon-up-open-big"></a>
+			<p>What is HyperInflation?</p>
+			<a href="#secondSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-12 text-center main-title">
-				<h1>Exploring Hyperinflation</h1>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-6 text-center">
+					<img src="img/what-is-hyperinflation-the-balance.png" class="shadow-lg" style="width: 90%;" />
+					<br>
+					<div class="attribution" style="text-align: left; padding: 10px 0px 0px 50px;">
+						Reference: <a href="https://www.thebalance.com/what-is-hyperinflation-definition-causes-and-examples-3306097">thebalance.com</a>
+					</div>
+				</div>
+				<div class="col-6">
+					Janice Graph
+				</div>
 			</div>
+		</div>
+		<div class="scroll-icon">
+			<p>Let's explore inflation rates around the World</p>
+			<a href="#thirdSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-12">
-				<h1> Hook: Inflation rate growth in Sudan</h1>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12" id="worldVis">
+					World Viz: Andrew
+				</div>
 			</div>
-			<div class="col-12" id="hookVis">
+		</div>
+		<div class="scroll-icon">
+			<p>What are the components of inflation and what leads to hyper inflation?</p>
+			<a href="#fourthSection" class="icon-up-open-big"></a>
+		</div>
+	</section>
+	<section class="vertical-scrolling">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-8 offset-2">
+					<p>
+						Hyperinflation increases stock market prices, wipes out the purchasing power of private and public savings,
+						distorts the economy in favor of the hoarding of real assets, causes the monetary base (whether specie or hard currency) to flee the country,
+						and makes the afflicted area anathema to investment.
+					</p>
+					<p>
+						Using the <a href="https://www.investopedia.com/terms/c/consumerpriceindex.asp">Consumer Price Index (CPI)</a>,
+						we are able to break down the inflation into different components, like Food, Electricity, Transportation, etc.
+					</p>
+					<p>
+						In the Visualizations below, you can explore the inflation rate over time in some of the countries which have
+						seen hyperinflationary periods in their history and the corresponding breakdown of this inflation into it's various components.
+					</p>
+					<p>
+						Select Country:
+						<select id='countrySelector' class="custom-select align-self-center">
+							<option value="Angola">Angola</option>
+							<option value="Bulgaria">Bulgaria</option>
+							<option value="Sudan" selected>Sudan</option>
+							<option value="Turkey">Turkey</option>
+							<option value="Zimbabwe">Zimbabwe</option>
+						</select>
+
+					</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-6" id="top5hyper" style="height: 45vh; padding-left: 25px;">
+
+				</div>
+				<div class="col-6" id="firstincrease" style="height: 45vh; padding-left: 25px;">
+
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-8 offset-2" id="brushVis" style="height: 20vh;">
+
+
+				</div>
 
 			</div>
 		</div>
-	</section>
-	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-12">
-				<h1>World Map Viz with Slider for time pick</h1>
-			</div>
-			<div class="col-12" id="worldVis">
-
-			</div>
+		<div class="scroll-icon">
+			<p>Next...</p>
+			<a href="#fifthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 
@@ -126,6 +199,7 @@
 <script src="js/commodityVis.js"></script>
 <script  src="js/top5hyperVis.js"></script>
 <script src="js/donutVis.js"></script>
+<script src="js/brushVis.js"></script>
 <script src="js/main.js"></script>
 
 <!-- fullPage -->

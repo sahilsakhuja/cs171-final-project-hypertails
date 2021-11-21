@@ -1,9 +1,24 @@
+/******************
+ *
+ * Creator: Janice Ly Pham
+ * Contributor: Sahil Sakhuja (Combined with Stacked Donut Chart)
+ *
+ */
+
+
 class topHyperVis {
 
     // Create topHyperVis constructor
-    constructor(parentElement, inflation) {
+    constructor(parentElement, _data, _country) {
         this.parentElement = parentElement;
-        this.inflation = inflation;
+        this.data = _data;
+        this.country = _country;
+
+        this.displayData = [];
+
+        this.lastYear = new Date().getFullYear();
+        this.startYear = 2015;
+        this.endYear = new Date().getFullYear();
 
         this.initVis()
     }
@@ -14,7 +29,7 @@ class topHyperVis {
 
         // Adjust by screen size
         vis.margin = {top: 20, right: 20, bottom: 20, left: 40};
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width+200 - vis.margin.left - vis.margin.right;
+        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
 
@@ -50,20 +65,18 @@ class topHyperVis {
 
         // Create line chart
         vis.top5line = d3.line()
-            .x(function(d) { return vis.x(d.year); })
-            .y(function(d) { return vis.y(d[selectedCategory]); })
+            .x(function(d) { return vis.x(d.Date); })
+            .y(function(d) { return vis.y(d['Consumer Price Index']); })
             .curve(d3.curveLinear);
 
         // Add y-axis text
         vis.svg.append("text")
             .attr("x", -35)
             .attr("y", 0)
-            .text("(%)");
+            .text("CPI");
 
         vis.tooltip_box = vis.svg.append("g")
             .style("display", "none");
-
-
 
         this.wrangleData();
 
@@ -73,31 +86,46 @@ class topHyperVis {
 
         let vis = this;
 
-        let filteredData = [];
+        // filter out the data only for the selected country
+        vis.filteredData = vis.data.filter((d) => d.Country === vis.country );
 
-        let parseTime = d3.timeParse("%Y");
+        // we want to display only for december of each year and the last month of the last year
+        let total_cnt = vis.filteredData.length;
+        vis.filteredData = vis.filteredData.filter((d, i) => {
+            if (d.Date.getMonth() === 11 && d.Date.getFullYear() >= vis.startYear && d.Date.getFullYear() <= vis.endYear)
+                return true;
+            else if ((vis.endYear === vis.lastYear) && (i+1) === total_cnt)
+                // special handling to also pick the last available date if end year is the same as last available year
+                return true;
+            else
+                return false;
+        });
 
-        // Convert strings to datetime object and float
-        for (let item of vis.inflation) {
-            let year = parseTime(item["Year"]);
-            let angola = parseFloat(parseFloat(item['Angola']).toFixed(2));
-            let turkey = parseFloat(parseFloat(item['Turkey']).toFixed(2));
-            let bulgaria = parseFloat(parseFloat(item['Bulgaria']).toFixed(2));
-            let sudan = parseFloat(parseFloat(item['Sudan']).toFixed(2));
-            let zimbabwe = parseFloat(parseFloat(item['Zimbabwe']).toFixed(2));
+        vis.displayData = vis.filteredData.sort((a, b) => a.Date - b.Date);
 
-            let newItem = {
-                "year": year,
-                "angola": angola,
-                "turkey": turkey,
-                "bulgaria": bulgaria,
-                "sudan": sudan,
-                "zimbabwe": zimbabwe
-            }
-            filteredData.push(newItem)
-        };
-
-        vis.filteredInflation = filteredData;
+        // let filteredData = [];
+        //
+        // // Convert strings to datetime object and float
+        // for (let item of vis.inflation) {
+        //     let year = parseTime(item["Year"]);
+        //     let angola = parseFloat(parseFloat(item['Angola']).toFixed(2));
+        //     let turkey = parseFloat(parseFloat(item['Turkey']).toFixed(2));
+        //     let bulgaria = parseFloat(parseFloat(item['Bulgaria']).toFixed(2));
+        //     let sudan = parseFloat(parseFloat(item['Sudan']).toFixed(2));
+        //     let zimbabwe = parseFloat(parseFloat(item['Zimbabwe']).toFixed(2));
+        //
+        //     let newItem = {
+        //         "year": year,
+        //         "angola": angola,
+        //         "turkey": turkey,
+        //         "bulgaria": bulgaria,
+        //         "sudan": sudan,
+        //         "zimbabwe": zimbabwe
+        //     }
+        //     filteredData.push(newItem)
+        // };
+        //
+        // vis.filteredInflation = filteredData;
 
         vis.updateVis()
 
@@ -106,44 +134,40 @@ class topHyperVis {
 
     updateVis(){
 
-        let selectedCategoryEl = document.getElementById("categorySelector");
-        let selectedCategory = selectedCategoryEl.value;
-
         let vis = this;
 
-
         // Update domain
-        vis.x.domain(d3.extent(vis.filteredInflation.map(function (d){
-            return d.year;
+        vis.x.domain(d3.extent(vis.displayData.map(function (d){
+            return d.Date;
         })))
 
-        vis.y.domain(d3.extent(vis.filteredInflation.map(function (d) {
-            return d[selectedCategory];
+        vis.y.domain(d3.extent(vis.displayData.map(function (d) {
+            return d['Consumer Price Index'];
         })));
 
         // Update line chart
         vis.top5linechart
             .transition()
             .duration(800)
-            .attr('d', vis.top5line(vis.filteredInflation))
+            .attr('d', vis.top5line(vis.displayData))
             .attr("fill", "none")
             .attr('stroke', 'salmon')
 
         // Add circle to line chart
         vis.circles = vis.svg.selectAll('.tooltipCircle')
-            .data(vis.filteredInflation, function (d) { return d.year; })
+            .data(vis.displayData, function (d) { return d.Date; })
 
         vis.circles.enter().append('circle')
             .attr('class', 'tooltipCircle')
             .merge(vis.circles)
+            .transition()
+            .duration(800)
             .attr('cx', function (d) {
-                return vis.x(d.year);
+                return vis.x(d.Date);
             })
             .attr('cy', function (d) {
-                return vis.y(d[selectedCategory]);
+                return vis.y(d['Consumer Price Index']);
             })
-            .transition()
-            .delay(1000)
             .attr('fill', 'red')
             .attr('r', 3)
 
@@ -160,4 +184,21 @@ class topHyperVis {
         vis.svg.select(".x-axis").call(vis.xAxis);
 
     }
-};
+
+    updateCountry(_country) {
+        let vis = this;
+        vis.country = _country;
+        vis.wrangleData();
+    }
+
+    updateYears(startYear, endYear) {
+        let vis = this;
+
+        vis.startYear = startYear;
+        vis.endYear = endYear;
+
+        vis.wrangleData();
+
+    }
+
+}

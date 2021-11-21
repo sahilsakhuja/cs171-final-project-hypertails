@@ -1,3 +1,9 @@
+/****************
+ *
+ * Creator: Sahil Sakhuja
+ *
+ */
+
 /*
  * donutVis - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the visualization
@@ -5,48 +11,33 @@
  */
 
 class donutVis {
-    constructor(_parentElement, _data, _weights) {
+    constructor(_parentElement, _data, _weights, _country) {
         this.parentElement = _parentElement;
         this.data = _data;
-        this.weights = [];
-        Object.keys(_weights).forEach((k) => {
-            this.weights.push({
-                'key': k,
-                'value': _weights[k],
-                'active': true
-            })
+        this.weights = _weights;
+        this.country = _country;
+
+        // activating only weights which have more than 5% weightage
+        this.weightState = {};
+
+        Object.keys(this.weights[this.country]).forEach( (w) => {
+            if(this.weights[this.country][w] <= 5)
+                this.weightState[w] = false;
+            else
+                this.weightState[w] = true;
         });
 
         // setting default params
-        this.lastYear = new Date().getFullYear();
-        this.startYear = 2015;
-        this.endYear = new Date().getFullYear();
+        // set last year as the last year of the data
+        this.lastYear = d3.max(this.data.filter((f) => f.Country === this.country), (d) => d.Date.getFullYear());
+        // set first year as 7 years ago
+        this.startYear = this.lastYear - 7;
+        this.endYear = this.lastYear;
         this.colors = ["#d376e3","#334752","#664c6b","#4a913d","#769aad","#42fc21","#27631c","#5e3d63","#f2a277","#2faff5", "#6269A8", "#222759"];
-
-        // convert the dates to actual dates - we'll need this for filtering
-        // we need to do this only once
-        this.dateParser = d3.timeParse("%d-%b-%Y");
-        this.data.forEach((d) => {
-            d.Date = this.dateParser(d.Date);
-            Object.keys(d).forEach( (k) =>
-            {
-                if (k !== 'Date')
-                    d[k] = +d[k];
-            });
-            return d;
-        });
 
         // sort the data by date - just in case
         // we need to do this only once
         this.data = this.data.sort((a, b) => a.Date - b.Date);
-
-        // sort the weights and set the weights below 1% to inactive (since we only want to show some of the values in the inital plot)
-        // we need to do this only once
-        this.weights.sort((a, b) => b.value - a.value);
-        this.weights.map((w) => {
-            if (w.value <= 5)
-                w.active = false;
-        });
 
         // console.log(this.data);
 
@@ -72,7 +63,8 @@ class donutVis {
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
         vis.legendDimLeft = 50;
-        vis.brushDimBottom = 150;
+        // vis.brushDimBottom = 150;
+        vis.brushDimBottom = 0;
 
         vis.pieWidth = (vis.width - vis.legendDimLeft);
         vis.pieHeight = (vis.height - vis.brushDimBottom);
@@ -98,124 +90,86 @@ class donutVis {
             .attr('class', 'legend-group')
             .attr("transform", "translate(0, 0)");
 
-        vis.legendRects = vis.legend.selectAll('rect')
-            .data(vis.weights)
-            .enter()
-            .append('rect')
-            .attr('class', 'legend-rect')
-            .attr('width', 10)
-            .attr('height', 10)
-            .attr('x', 2)
-            .attr('y', (d, i) => i * 15)
-            .attr('fill', (d, i) => vis.colors[i])
-            .on('click', (event, d) => {
-                vis.weights.map((w) => {
-                    if (w.key == d.key)
-                        w.active = !w.active;
-                })
-                vis.wrangleData();
-            });
 
-        vis.legend.selectAll('text')
-            .data(vis.weights)
-            .enter()
-            .append('text')
-            .attr('class', 'legend-text')
-            .attr('x', 15)
-            .attr('y', (d, i) => i * 15 + 10)
-            .text((d) => {
-                if (d.key.length > 30)
-                    return d.key.substr(0, 30) + '...';
-                else
-                    return d.key;
-            })
-            .on('click', (event, d) => {
-                vis.weights.map((w) => {
-                    if (w.key == d.key)
-                        w.active = !w.active;
-                })
-                vis.wrangleData();
-            });
-
-        // draw the brushing component
-        vis.brushMargin = { top: 0, right: 0, bottom: 20, left: 50 };
-        vis.brushWidth = vis.width - vis.brushMargin.left,
-            vis.brushHeight = vis.brushDimBottom - vis.brushMargin.bottom;
-
-        // init scales
-        vis.x = d3.scaleTime()
-            .range([0, vis.brushWidth])
-            .domain(d3.extent(vis.data, (d) => d.Date));
-
-        vis.y = d3.scaleLinear()
-            .range([vis.brushHeight, 0])
-            .domain(d3.extent(vis.data, (d) => d['Consumer Price Index']));
-
-        // init x & y axis
-        vis.xAxis = vis.svg.append("g")
-            .attr("class", "axis axis-x")
-            .attr("transform", "translate(" + vis.brushMargin.left + ", " + (vis.pieHeight + vis.brushHeight) + ")");
-
-        vis.yAxis = vis.svg.append("g")
-            .attr("class", "axis axis-y")
-            .attr('transform', "translate(" + vis.brushMargin.left + "," + vis.pieHeight + ")");
-
-        vis.brushHolder = vis.svg.append('g')
-            .attr('class', 'brush-holder')
-            .attr('transform', 'translate('+ vis.brushMargin.left +', ' + vis.pieHeight + ')');
-
-        // init pathGroup
-        vis.pathGroup = vis.brushHolder
-            .append('g')
-            .attr('class', 'pathGroup');
-
-        // clip path
-        vis.pathGroup.append("defs")
-            .append("clipPath")
-            .attr("id", "clip")
-            .append("rect")
-            .attr("width", vis.brushWidth)
-            .attr("height", vis.brushHeight);
-
-        // init path for CPI
-        vis.pathOne = vis.pathGroup
-            .append('path')
-            .attr("class", "pathOne");
-
-        // init path generator
-        vis.area = d3.area()
-            .curve(d3.curveMonotoneX)
-            .x(function (d) {
-                return vis.x(d.Date);
-            })
-            .y0(vis.y(0))
-            .y1(function (d) {
-                return vis.y(d['Consumer Price Index']);
-            });
-
-        // draw x & y axis
-        vis.xAxis.transition().duration(400).call(d3.axisBottom(vis.x));
-        vis.yAxis.transition().duration(400).call(d3.axisLeft(vis.y).ticks(5));
-
-        // draw the path
-        vis.pathOne.datum(vis.data)
-            .transition().duration(400)
-            .attr("d", vis.area)
-            .attr("class", 'brush-path')
-            .attr("clip-path", "url(#clip)");
-
-        // init brush
-        vis.brush = d3.brushX()
-            .extent([[0, 0], [vis.brushWidth, vis.brushHeight]])
-            .on("brush end", function (event) {
-                let selectedTimeRange = [vis.x.invert(event.selection[0]), vis.x.invert(event.selection[1])];
-                vis.startYear = selectedTimeRange[0].getFullYear();
-                vis.endYear = selectedTimeRange[1].getFullYear();
-                vis.wrangleData();
-            });
-
-        vis.brushHolder
-            .call(vis.brush);
+        // // draw the brushing component
+        // vis.brushMargin = { top: 0, right: 0, bottom: 20, left: 50 };
+        // vis.brushWidth = vis.width - vis.brushMargin.left,
+        //     vis.brushHeight = vis.brushDimBottom - vis.brushMargin.bottom;
+        //
+        // // init scales
+        // vis.x = d3.scaleTime()
+        //     .range([0, vis.brushWidth])
+        //     .domain(d3.extent(vis.data, (d) => d.Date));
+        //
+        // vis.y = d3.scaleLinear()
+        //     .range([vis.brushHeight, 0])
+        //     .domain(d3.extent(vis.data, (d) => d['Consumer Price Index']));
+        //
+        // // init x & y axis
+        // vis.xAxis = vis.svg.append("g")
+        //     .attr("class", "axis axis-x")
+        //     .attr("transform", "translate(" + vis.brushMargin.left + ", " + (vis.pieHeight + vis.brushHeight) + ")");
+        //
+        // vis.yAxis = vis.svg.append("g")
+        //     .attr("class", "axis axis-y")
+        //     .attr('transform', "translate(" + vis.brushMargin.left + "," + vis.pieHeight + ")");
+        //
+        // vis.brushHolder = vis.svg.append('g')
+        //     .attr('class', 'brush-holder')
+        //     .attr('transform', 'translate('+ vis.brushMargin.left +', ' + vis.pieHeight + ')');
+        //
+        // // init pathGroup
+        // vis.pathGroup = vis.brushHolder
+        //     .append('g')
+        //     .attr('class', 'pathGroup');
+        //
+        // // clip path
+        // vis.pathGroup.append("defs")
+        //     .append("clipPath")
+        //     .attr("id", "clip")
+        //     .append("rect")
+        //     .attr("width", vis.brushWidth)
+        //     .attr("height", vis.brushHeight);
+        //
+        // // init path for CPI
+        // vis.pathOne = vis.pathGroup
+        //     .append('path')
+        //     .attr("class", "pathOne");
+        //
+        // // init path generator
+        // vis.area = d3.area()
+        //     .curve(d3.curveMonotoneX)
+        //     .x(function (d) {
+        //         return vis.x(d.Date);
+        //     })
+        //     .y0(vis.y(0))
+        //     .y1(function (d) {
+        //         return vis.y(d['Consumer Price Index']);
+        //     });
+        //
+        // // draw x & y axis
+        // vis.xAxis.transition().duration(400).call(d3.axisBottom(vis.x));
+        // vis.yAxis.transition().duration(400).call(d3.axisLeft(vis.y).ticks(5));
+        //
+        // // draw the path
+        // vis.pathOne.datum(vis.data)
+        //     .transition().duration(400)
+        //     .attr("d", vis.area)
+        //     .attr("class", 'brush-path')
+        //     .attr("clip-path", "url(#clip)");
+        //
+        // // init brush
+        // vis.brush = d3.brushX()
+        //     .extent([[0, 0], [vis.brushWidth, vis.brushHeight]])
+        //     .on("brush end", function (event) {
+        //         let selectedTimeRange = [vis.x.invert(event.selection[0]), vis.x.invert(event.selection[1])];
+        //         vis.startYear = selectedTimeRange[0].getFullYear();
+        //         vis.endYear = selectedTimeRange[1].getFullYear();
+        //         vis.wrangleData();
+        //     });
+        //
+        // vis.brushHolder
+        //     .call(vis.brush);
 
         vis.wrangleData();
     }
@@ -223,9 +177,13 @@ class donutVis {
     wrangleData() {
         let vis = this;
 
+        // filter out the data only for the selected country
+        vis.filteredData = vis.data.filter((d) => d.Country === vis.country );
+
         // let's start by displaying only for december of each year and the last month of the last year
-        let total_cnt = vis.data.length;
-        vis.filteredData = vis.data.filter((d, i) => {
+        let total_cnt = vis.filteredData.length;
+
+        vis.filteredData = vis.filteredData.filter((d, i) => {
             if (d.Date.getMonth() === 11 && d.Date.getFullYear() >= vis.startYear && d.Date.getFullYear() <= vis.endYear)
                 return true;
             else if ((vis.endYear === vis.lastYear) && (i+1) === total_cnt)
@@ -235,17 +193,35 @@ class donutVis {
                 return false;
         });
 
-        vis.filteredData = this.filteredData.sort((a, b) => a.Date - b.Date);
+        vis.filteredData = vis.filteredData.sort((a, b) => a.Date - b.Date);
 
         // console.log(vis.filteredData);
+        // filter the weights
+        vis.filteredWeights = vis.weights[vis.country];
+        vis.filteredWeightsForDisplay = [];
+        Object.keys(vis.filteredWeights).forEach((k) => {
+            vis.filteredWeightsForDisplay.push({
+                'key': k,
+                'value': vis.filteredWeights[k]
+            })
+        });
+
+
+        // sort the weights and set the weights below 1% to inactive (since we only want to show some of the values in the inital plot)
+        // we need to do this only once
+        vis.filteredWeightsForDisplay.sort((a, b) => b.value - a.value);
+        // vis.filteredWeightsForDisplay.map((w) => {
+        //     if (w.value <= 5)
+        //         w.active = false;
+        // });
 
         // apply the weights to the filtered data
         vis.displayData = vis.filteredData.map((d) => {
             let new_d = {};
             new_d.Date = d.Date;
             new_d.PieValues = [];
-            vis.weights.forEach((w, i) => {
-                if (w.active)
+            vis.filteredWeightsForDisplay.forEach((w, i) => {
+                if (vis.weightState[w.key]) {
                     new_d.PieValues.push(
                         {
                             'key': w.key,
@@ -253,7 +229,19 @@ class donutVis {
                             'weight_idx': i
                         }
                     )
+                }
             });
+
+            // vis.filteredWeights.forEach((w, i) => {
+            //     if (w.active)
+            //         new_d.PieValues.push(
+            //             {
+            //                 'key': w.key,
+            //                 'value': d[w.key] * w.value / 100,
+            //                 'weight_idx': i
+            //             }
+            //         )
+            // });
             return new_d;
         });
 
@@ -298,11 +286,52 @@ class donutVis {
 
         });
 
+        vis.legendRects = vis.legend.selectAll('rect')
+            .data(vis.filteredWeightsForDisplay);
+
+        vis.legendRects.enter()
+            .append('rect')
+            .merge(vis.legendRects)
+            .attr('class', 'legend-rect')
+            .attr('width', 10)
+            .attr('height', 10)
+            .attr('x', 2)
+            .attr('y', (d, i) => i * 15)
+            .attr('fill', (d, i) => vis.colors[i])
+            .on('click', (event, d) => {
+                vis.weightState[d.key] = !vis.weightState[d.key];
+                vis.wrangleData();
+            });
+
+        vis.legendRects.exit().remove();
+
+        vis.legendText = vis.legend.selectAll('text')
+            .data(vis.filteredWeightsForDisplay);
+
+        vis.legendText.enter()
+            .append('text')
+            .merge(vis.legendText)
+            .attr('class', 'legend-text')
+            .attr('x', 15)
+            .attr('y', (d, i) => i * 15 + 10)
+            .text((d) => {
+                if (d.key.length > 30)
+                    return d.key.substr(0, 30) + '...';
+                else
+                    return d.key;
+            })
+            .on('click', (event, d) => {
+                vis.weightState[d.key] = !vis.weightState[d.key];
+                vis.wrangleData();
+            });
+
+        vis.legendText.exit().remove();
+
         vis.legend.selectAll('rect')
-            .attr('opacity', (d) => d.active ? 1 : 0.25);
+            .attr('opacity', (d) => vis.weightState[d.key] ? 1 : 0.25);
 
         vis.legend.selectAll('text')
-            .attr('opacity', (d) => d.active ? 1 : 0.25);
+            .attr('opacity', (d) => vis.weightState[d.key] ? 1 : 0.25);
 
         // let outerRadius = vis.width / 10;
         // let innerRadius = vis.width / 12;      // Relevant for donut charts
@@ -349,6 +378,28 @@ class donutVis {
         // });
         //
         // arcs.exit().remove();
+
+    }
+
+    updateCountry(_country) {
+        let vis = this;
+        vis.country = _country;
+        Object.keys(vis.weights[vis.country]).forEach( (w) => {
+            if(vis.weights[vis.country][w] <= 5)
+                vis.weightState[w] = false;
+            else
+                vis.weightState[w] = true;
+        });
+        vis.wrangleData();
+    }
+
+    updateYears(startYear, endYear) {
+        let vis = this;
+
+        vis.startYear = startYear;
+        vis.endYear = endYear;
+
+        vis.wrangleData();
 
     }
 

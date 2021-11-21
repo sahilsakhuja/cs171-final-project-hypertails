@@ -44,6 +44,44 @@ li {
   color: var(--earth-yellow)
 }
 
+.attribution {
+  font-color: var(--davys-grey);
+  font-size: 10px;
+  font-style: italic;
+}
+
+.attribution a {
+  font-color: var(--davys-grey);
+  font-size: 10px;
+  font-style: italic;
+}
+
+.container, .container-fluid {
+  color: var(--davys-grey);
+  font-family: Calibri;
+  font-size: 12px;
+  text-transform: none;
+  text-align: left;
+}
+
+.container a, .container-fluid a {
+  color: var(--davys-grey);
+  font-family: Calibri;
+  font-size: 12px;
+  text-transform: none;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.container a:hover, .container-fluid a:hover {
+  color: var(--davys-grey);
+  font-family: Calibri;
+  font-size: 12px;
+  text-transform: none;
+  text-align: left;
+  text-decoration: underline;
+  font-weight: bold;
+}
 
 /*********************************
 
