@@ -40,11 +40,6 @@ class AreaVis {
 
         vis.xAxis = d3.axisBottom()
             .scale(vis.xScale)
-            .tickSize(0,0)
-            .ticks(5)
-            .tickPadding(6)
-            //.orient("bottom")
-            .tickFormat(function(d){ console.log(d.year); return d.year; });
 
         vis.svg.append("g")
             .attr("class", "axis x-axis")
@@ -152,9 +147,7 @@ class AreaVis {
         //vis.svg.append('circle').classed('hoverPoint-area', true);
         //vis.svg.append('circle').classed('hoverPoint-line', true);
 
-        vis.formatDate = d3.timeFormat('%Y')
-
-
+        vis.formatDate = d3.timeFormat('%Y');
 
         this.wrangleData();
 
@@ -221,6 +214,19 @@ class AreaVis {
             return d.year;
         }))
 
+        // Update x-axis with new tick values
+
+        let tickValuesForxAxis = vis.sudan_cpi.map(d => d.year);
+
+        vis.xAxis
+            .tickValues(tickValuesForxAxis.filter (function (d, i) {
+                return !(i%20);
+            }))
+            .tickFormat(function (d) {
+                return vis.formatDate(d);
+            });
+
+
         // Update y domain
        /* vis.yScaleL.domain(d3.extent(vis.sudan_cpi, function (d) {
             return d.cpi;
@@ -229,6 +235,7 @@ class AreaVis {
         vis.yScaleL.domain(d3.extent(vis.sudan_cpi, function (d) {
             return d.cpi;
         }))
+
 
         // Update color domain
         vis.colors.domain([
@@ -406,7 +413,6 @@ class AreaVis {
         /*vis.svg.select(".y-axisR")
             .call(vis.yAxisR);*/
 
-        // Update x-axis
         vis.svg.select(".x-axis").call(vis.xAxis);
 
 
