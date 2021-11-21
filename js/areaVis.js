@@ -178,7 +178,7 @@ class AreaVis {
         vis.sudan_cpi = sudanCPI;
         console.log(vis.sudan_cpi)
 
-        let sudan_exch = [];
+        /*let sudan_exch = [];
 
         // Convert strings to datetime object and float for exchange rate data
         for (let item_ of vis.exch) {
@@ -194,7 +194,7 @@ class AreaVis {
 
         };
         vis.exch_rate = sudan_exch;
-        console.log(vis.exch_rate)
+        console.log(vis.exch_rate)*/
 
 
 
@@ -280,9 +280,7 @@ class AreaVis {
 
                 return vis.height - vis.yScaleL(0)
             } )
-            /*.transition()
-            .delay(500)
-            .style('fill', 'red')*/
+
 
         vis.svg.selectAll("rect")
             .transition()
@@ -293,14 +291,6 @@ class AreaVis {
             .style('fill', function (d) {
                 return vis.colors(d.cpi);
             })
-
-
-
-
-
-            /*.style('fill', function (d) {
-                return vis.colors(d[selectedCategory]);
-            })*/
 
 
 
@@ -387,11 +377,7 @@ class AreaVis {
                 .attr('r', '7')
                 .attr('fill', 'red');
 
-
-
         }*/
-
-
 
 
         // Update line chart
