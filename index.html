@@ -61,9 +61,15 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	<section class="vertical-scrolling">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12" id="worldVis">
-					World Viz: Andrew
+				<div id="map-tooltip">
+
 				</div>
+				<div id="mapvisual">
+				  <div id="choropleth-map" style="height: 100%; width:100%;"></div>
+				  <div id="brushDiv" style="height: 100%; width:100%;"></div>
+			
+				</div>
+			
 			</div>
 		</div>
 		<div class="scroll-icon">
@@ -160,10 +166,12 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	</section>
 	<section class="vertical-scrolling">
 		<div class="row">
-			<div class="col-9" id="commodityinflation">
-			</div>
-			<div class="col-3">
-				Some text here for commodity inflation
+			<div class ="linechart">
+				<div id = "mainvis"></div>
+				<div id = "legendvis"></div>
+			  </div>
+			  <div class="linechart-text">
+				By exploring the commodity inflation across the world we can discover CPI (consumer price index) has steadily increased throughout the years. From this visuaisation we are able to compare each invidiual commodity and see if there are any outliers. The one commodity - transportation is alarming since from 2021 onwards it has spiked dramatically causing concerns to hyperflation. 
 			</div>
 		</div>
 	</section>
@@ -196,10 +204,14 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <!-- own js files -->
+<script src="js/worldVis.js"></script>
+
 <script src="js/commodityVis.js"></script>
 <script  src="js/top5hyperVis.js"></script>
 <script src="js/donutVis.js"></script>
 <script src="js/brushVis.js"></script>
+<script src="js/mapBrushVis.js"></script>
+
 <script src="js/main.js"></script>
 
 <!-- fullPage -->

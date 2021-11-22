@@ -1,94 +1,233 @@
-d3.csv("data/IMF_CPI_US - updated.csv")
-    .then((csv) => {
 
-        const margin = {top: 30,right: 30,bottom: 30,left: 30};
-        const width = 1080;
-        const height = 330;
 
-        const categories = csv.map((row) => {
-            const category = row[csv.columns[0]];
-            const values = csv.columns.slice(1).map((dateColumn) => parseFloat(row[dateColumn]));
-            return {category, values}
-        });
+class LineChart {
 
-        const parseDate = d3.timeParse("%YM%m");
-        const allDates = csv.columns.slice(1).map((dateColumn) => parseDate(dateColumn))
+	constructor(parentElement, data, ) {
+		this.parentElement = parentElement;
+		this.data = data;
+		this.initVis();
+	}
 
-        const data = {
-            categories,
-            allDates,
-        };
+	initVis() {
+		let vis = this;
 
-        let dateValues = data.categories.map((category) => category.values)
 
-        let x = d3.scaleTime()
-            .domain(d3.extent(data.allDates))
-            .range([30, 700]);
+  
+    vis.margin = {top: 30, right: 30, bottom: 30, left: 0}
+    vis.width = 860;
+    vis.height = 400;
+    
+    
+    vis.svg = d3.select("#mainvis")
+    .append("svg")
+    .attr("width", vis.width)
+    .attr("height", vis.height)
 
-        let y = d3.scaleLinear()
-            .domain(d3.extent(dateValues.flat()))
-            .range([height -30, 25])
+    vis.legendkey = d3.select("#legendvis")
+    .append("svg")
+    .attr("width", 200)
+    .attr("height", 300);
 
-        let svg = d3.select("#commodityinflation")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
 
-        svg.append("g")
-            .attr("transform", `translate(0,${height - 30})`)
-            .call(d3.axisBottom(x))
+    let yValues = vis.data.categories.map((category) => category.values)
 
-        let yAxis = svg
+    vis.x = d3.scaleTime() 
+            .domain(d3.extent(vis.data.allDates))
+            .range([vis.margin.left, vis.width - vis.margin.right]);
+
+    vis.y = d3.scaleLinear()
+            .domain(d3.extent(yValues.flat()))
+            .range([vis.height - vis.margin.bottom, vis.margin.top])
+
+
+    vis.svg.append("g")
+            .attr("transform", `translate(0,${vis.height - vis.margin.bottom})`)
+            .call(d3.axisBottom(vis.x))
+        
+          // Y axis
+          vis.gYAxis = vis.svg
             .append("g")
-            .attr("transform", `translate(${margin.left},0)`)
-            .call(d3.axisLeft(y))
+            .attr("transform", `translate(${vis.margin.left},0)`)
+            .call(d3.axisLeft(vis.y))
 
-        yAxis
+            vis.gYAxis
             .append("text")
-            .attr("x", 90)
+            .attr("x", 0)
             .attr("y", 10)
             .attr("fill", "black")
-            .text("Consumer Price Index");
+            .attr("text-anchor", "start")
+            .text("Consumer Price Index"); 
 
-        const color = d3.scaleOrdinal()
-            .range(['#06d6a0','#213f65','#56b7e6','#90e0ef','#ef476f','#ed1c24','#623412','#939597', '#ffd6ba', '#bcb8b1', '#ffcbf2', '#ff0073'])
+    vis.legend = vis.legendkey.append('g')
+            .attr('font-family', 'sans-serif');
 
-        svg
-            .append("g")
-            .attr("fill", "none")
-            .attr("stroke-width", 1.7)
-            .selectAll("path")
-            .data(data.categories)
-            .join("path")
-            .attr("stroke", (d,i) => { return color(d.category[i]) })
-            .attr("d", (d) => {
-                return d3.line()
-                    .x((d, i) => {return x(data.allDates[i])})
-                    .y((d) => {return y(d)})
-                    (d.values)
-            })
+    vis.cell = vis.legend.selectAll('g')
+      .data(vis.data.categories)
+      .join('g');
+
+    vis.color = d3.scaleOrdinal(d3.schemePaired)
+
+    vis.cell.append('rect')
+        .attr('fill', (d) => { return vis.color(d)})
+        .attr('y', (d,i)=> {return 30*i})
+        .attr('width', 15)
+        .attr('height', 15)
+
+    vis.cell.append('text')
+        .attr('x', ()=> {return 20})
+        .attr('y', (d,i)=> {return 30*i +10})
+        .attr("class", function(d){ return d.categoryName })
+        .style("pointer-events", 'auto')
+        .text(d => d.category)
+        .on("click", function(event,d){
+          let currentOpacity = d3.selectAll("." + d.categoryName).style("opacity")          
+          d3.selectAll("." + d.categoryName).transition().style("opacity", currentOpacity == 1 ? 0.1:1)
+      })
+  
 
 
-        const key = svg.append('g')
-            .selectAll('g')
-            .data(data.categories)
-            .join('g')
 
-        key.append('rect')
-            .attr('fill', (d,i)=>{ return color(d.category[i]) })
-            .attr('width', 18)
-            .attr('height', 18)
-            .attr("x",745)
-            .attr("y", (d, i) => {
-                return  (i * 25);
-            })
+		vis.wrangleData();
+	}
 
-        key.append('text')
-            .attr('dominant-baseline', 'middle')
-            .attr('x',  775)
-            .attr("y", (d, i) => {
-                return 10 + (i * 25);
-            })
-            .style("font-size", "13px")
-            .text(d => d.category);
-    });
+	wrangleData() {
+		let vis = this;
+
+
+    vis.cell.on("click", (d,i) => {
+
+      let allSelectedCategory = []
+      vis.data.categories.forEach((x) => {
+        allSelectedCategory.push(x.category)
+      })
+
+      console.log(allSelectedCategory)
+      if (allSelectedCategory.includes(i.category)) {
+        let updatedData = vis.data.categories.filter((y) =>y.category !== i.category)
+        vis.data.categories = updatedData
+      } else {
+        vis.data.categories.push(i)
+      }
+
+  })
+
+  
+      vis.updateVis();
+
+	}
+
+
+
+	updateVis() {
+		var vis = this;
+
+
+    vis.path = vis.svg
+      .append("g")
+      .attr("fill", "none")
+      .attr("stroke-width", 1.5)
+      .selectAll("path")
+      .data(vis.data.categories)
+      .join("path")
+      .attr("class", (d) => { return d.categoryName })
+      .attr("stroke", (d) => { return vis.color(d) })
+      .attr("d", (d) => {
+        return d3.line() 
+                .x((d, i) => {return vis.x(vis.data.allDates[i])})
+                .y((d) => {return vis.y(d)})
+        (d.values)  
+      })
+
+      vis.cell.on("mouseover", (p,r) => {
+        vis.path.attr("stroke", (d,i) => { 
+         return d.category === r.category ? vis.color(d) : "#ddd"
+         })
+         vis.cell.style("cursor", "pointer")
+
+      }
+      )
+      vis.cell.on("mouseout", () => {
+        vis.path.attr("stroke", (d,i) => { return vis.color(d) })
+      });
+    
+
+
+
+    vis.dot = vis.svg.append("g").attr("display", "none");
+
+    vis.dot.append("circle").attr("r", 2.5);
+
+    vis.dot.append("text").attr("text-anchor", "middle");
+
+    vis.tooltip = d3.select(".linechart ").append('div')   
+    .attr('class', 'linechart-tooltip')
+    .style("position", "absolute")
+    .style("z-index", "10")
+
+
+  
+    vis.svg.on("mouseenter", () => {
+        vis.path.style("mix-blend-mode", null).attr("stroke", "#ddd")
+        vis.dot.attr("display", null)
+        vis.tooltip.style("display", null); 
+
+
+      })
+        .on("mouseleave", () => {
+          vis.path.style("mix-blend-mode", "multiply").attr("stroke", 'null');
+          vis.path.attr("stroke", (d,i) => { return vis.color(d) })
+          vis.dot.attr("display", "none"); 
+          vis.tooltip.style("display", "none"); 
+
+      });
+
+
+
+    vis.svg.on("mousemove", moved)
+
+    function moved(event) {
+      let parseDate = d3.utcFormat("%b %Y")
+      const pointerX = d3.pointer(event)[0]
+      const pointerY = d3.pointer(event)[1]
+
+    
+      const xDate = vis.x.invert(pointerX); 
+      const yValue = vis.y.invert(pointerY);
+      const i = d3.bisectCenter(vis.data.allDates, xDate); 
+
+      
+      const cursorDate = vis.data.allDates[i];
+
+      const cursorPriceIndex =  vis.data.categories.map((d) => d.values[i]); 
+      const closestCategoryLine = cursorPriceIndex.map((d) => Math.abs(d - yValue))
+      const categoryLineIndex = d3.leastIndex(closestCategoryLine); 
+      
+      const lineCategory = vis.data.categories[categoryLineIndex].category;
+      const lineValue = vis.data.categories[categoryLineIndex].values[i];
+      
+
+      vis.path
+        .attr("stroke", (d) => d.category === lineCategory ? vis.color(d) : "#ddd")
+        .attr("stroke-opacity", 1)
+        .filter((d) => d.category === lineCategory) 
+        .raise();
+
+
+
+          vis.dot.attr("transform", `translate(${vis.x(cursorDate)},${vis.y(lineValue)})`)
+
+
+
+	
+      vis.tooltip.html(`${parseDate(cursorDate)}` + "<br/>"  + `${lineCategory}`+ "<br/>" + `${lineValue}` )	
+      // .style("left", (vis.x(cursorDate)) + "px")		
+      // .style("top", (vis.y(lineValue) ) + "px")
+      
+  }
+
+
+	}
+
+}
+
+
