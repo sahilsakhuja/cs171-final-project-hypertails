@@ -107,7 +107,7 @@ class areaVis {
         vis.svg.append("text")
             .attr("x", -20)
             .attr("y", -5)
-            .text("CPI")
+            .text("CPI - Price comparison year on year")
             .style("font-size", "12px");
 
         /*// Add right y-axis text

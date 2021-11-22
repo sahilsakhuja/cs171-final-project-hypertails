@@ -76,7 +76,7 @@ class donutVis {
         vis.pie = d3.pie()
             .value((d) => d.value);
 
-        vis.tooltip = d3.select("body").append('div')
+        vis.tooltip = d3.select('body').append('div')
             .attr('class', "tooltip")
             .attr('id', 'pieTooltip')
 
@@ -240,6 +240,9 @@ class donutVis {
         // sort the weights in alphabetic order
         vis.filteredWeightsForDisplay = vis.filteredWeightsForDisplay.sort((a, b) => a.key.localeCompare(b.key));
 
+        // console.log(vis.filteredData);
+        // console.log(vis.filteredWeightsForDisplay);
+
         // apply the weights to the filtered data
         vis.displayData = vis.filteredData.map((d) => {
             let new_d = {};
@@ -251,6 +254,8 @@ class donutVis {
                         {
                             'key': w.key,
                             'value': d[w.key] * w.value / 100,
+                            'total_value': d['Consumer Price Index'],
+                            'date': d.Date,
                             'weight_idx': i
                         }
                     )
@@ -302,6 +307,35 @@ class donutVis {
                 .append('path')
                 .attr('class', `arc arc-parts-${i}`)
                 .merge(arcs)
+                .on('mouseover', function(event, d){
+                    d3.select(this)
+                        .attr('stroke-width', '2px')
+                        .attr('stroke', 'black')
+                        .attr('fill', 'rgba(173,222,255,0.62)');
+
+                    vis.tooltip
+                        .style("opacity", 1)
+                        .style("left", event.pageX + 20 + "px")
+                        .style("top", event.pageY + "px")
+                        .html(`<div class="tooltip-holder">
+                 <strong>Category:</strong> ${d.data.key}<br>
+                 <strong>Year:</strong> ${d.data.date.getFullYear()}<br>
+                 <strong>Contribution to Total CPI:</strong> <span class="emphasis">${(d.data.value * 100 / d.data.total_value).toFixed(1)}%</span>
+             </div>`);
+
+                }).on('mouseout', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '0px')
+                    .attr("fill", (d) => {
+                        return vis.colors[d.data.weight_idx];
+                    });
+
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+                })
                 .transition()
                 .duration(400)
                 .attr('d', arc)
@@ -309,36 +343,6 @@ class donutVis {
                     return vis.colors[_d.data.weight_idx];
                 })
                 .attr('opacity', 0.25 + i * 0.07);
-            //     .on('mouseover', function(event, d){
-            //
-            //         d3.select(this)
-            //             .attr('stroke-width', '2px')
-            //             .attr('stroke', 'black')
-            //             .attr('fill', 'rgba(173,222,255,0.62)')
-            //
-            //         vis.tooltip
-            //             .style("opacity", 1)
-            //             .style("left", event.pageX + 20 + "px")
-            //             .style("top", event.pageY + "px")
-            //             .html(`<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-            //      <h3>Arc with index #${d.index}<h3>
-            //      <h4> value: ${d.value}</h4>
-            //      <h4> startAngle: ${d.startAngle}</h4>
-            //      <h4> endAngle: ${d.endAngle}</h4>
-            //      <h4> data: ${JSON.stringify(d.data)}</h4>
-            //  </div>`);
-            //
-            //     }).on('mouseout', function(event, d){
-            //     d3.select(this)
-            //         .attr('stroke-width', '0px')
-            //         .attr("fill", d => d.data.color)
-            //
-            //     vis.tooltip
-            //         .style("opacity", 0)
-            //         .style("left", 0)
-            //         .style("top", 0)
-            //         .html(``);
-            // });
 
             arcs.exit().remove();
 

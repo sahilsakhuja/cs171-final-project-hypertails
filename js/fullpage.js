@@ -2,7 +2,7 @@
 // fullpage customization
 $('#fullpage').fullpage({
     // sectionsColor: ['#43aa8b', '#277da1', '#F2AE72', '#ff8fa3', '#4d908e','#f3722c','#f9c74f','#43aa8b','#577590', '#ff8fa3'],
-    sectionsColor: ['#FFFFFF', '#FFF799', '#96F2EE', '#FFFFFF', '#4d908e','#FFFFFF','#f9c74f','#43aa8b','#577590', '#ff8fa3'],
+    sectionsColor: ['#FFFFFF', '#FFF799', '#96F2EE', '#FFFFFF', '#FFFFFF','#FFFFFF'],
     sectionSelector: '.vertical-scrolling',
     slideSelector: '.horizontal-scrolling',
     navigation: true,
@@ -14,12 +14,12 @@ $('#fullpage').fullpage({
             setTimeout(function() {
                 animatedBarChartVis.animateBarChart();
                 animatedBarChartRun = true;
-            }, 2000);
+            }, 500);
         } else if ((section === 'sixthSection') && !bubbleChartVisRun) {
             setTimeout(function() {
                 categoryBubbleVis.animateSavings();
                 bubbleChartVisRun = true;
-            }, 1000);
+            }, 100);
         }
 
         // //first slide of the second section

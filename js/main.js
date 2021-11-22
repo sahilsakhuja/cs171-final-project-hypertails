@@ -51,9 +51,9 @@ data_files = [
 ]
 
 let promises = data_files.map((f) => {
-    if (f.type == 'csv')
+    if (f.type === 'csv')
         return d3.csv(f.file);
-    else if (f.type == 'json')
+    else if (f.type === 'json')
         return d3.json(f.file);
 });
 
@@ -62,7 +62,7 @@ Promise.all(promises)
     .catch( function (err){console.log(err)} );
 
 function get_file_idx(name) {
-    return data_files.filter((f) => f.name == name)[0]['idx'];
+    return data_files.filter((f) => f.name === name)[0]['idx'];
 }
 
 // initMainPage
@@ -129,6 +129,13 @@ selectedCountryEl.addEventListener('change', function (event) {
 function brushUpdate(startYear, endYear) {
     increaseVis.updateYears(startYear, endYear);
     top5hyperVis.updateYears(startYear, endYear);
+}
+
+function updateBubbleSettings() {
+    categoryBubbleVis.changeBaseIncomeExpense(
+        parseFloat(document.getElementById('baseIncome').value),
+        parseFloat(document.getElementById('baseExpense').value)
+    )
 }
 
 function increaseInflation() {

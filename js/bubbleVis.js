@@ -27,21 +27,28 @@ class bubbleVis {
         // sort the weights in alphabetic order
         this.filteredWeightsForDisplay = this.filteredWeightsForDisplay.sort((a, b) => a.key.localeCompare(b.key));
 
-        let i = 0;
-        this.cumulativeWeights = this.filteredWeightsForDisplay.map((w) => {
-            i = i + w.value;
-            return i;
-        })
-
         this.colors = categoryColors;
 
-        this.totalIncome = 65000;
-        this.actualExpense = 63000;
-        this.currentIncome = 1000;
-        this.currentSavings = 1000;
-        this.currentExpense = 63000;
-        this.baseCpi = 1000;
+        this.baseIncome = 65000;
+        this.baseExpense = 63000;
+        this.currentIncome = 0;
+        this.currentSavings = 0;
+        this.currentExpense = 0;
+        this.baseCpi = 300;
         this.currentCpi = 0;
+        this.currentInflation = 0;
+
+        this.baseRadius = 10;
+
+        let i = 0;
+        this.cumulativeWeights = this.filteredWeightsForDisplay.map((w) => {
+            i = i + (w.value * this.baseCpi / 100);
+            return i;
+        });
+
+        console.log(this.cumulativeWeights);
+
+        this.currencyFormat = d3.format("$,.2f");
 
         this.initVis();
     }
@@ -78,15 +85,17 @@ class bubbleVis {
         // putting the income as text
 
         vis.incomeText = vis.income.append('text')
-            .text('Averge Income: $ ' + vis.currentIncome)
+            .attr('class', 'bubbleVisIncomeText')
             .attr('x', 0)
             .attr('y', 0);
 
         vis.expenseText = vis.income.append('text')
+            .attr('class', 'bubbleVisExpenseText')
             .attr('x', 0)
             .attr('y', 15);
 
         vis.savingsText = vis.income.append('text')
+            .attr('class', 'bubbleVisSavingsText')
             .attr('x', 0)
             .attr('y', 30);
 
@@ -125,8 +134,16 @@ class bubbleVis {
             });
 
         // making the expenses bubble chart
-        vis.colorScale = d3.scaleOrdinal()
-            .range(vis.colors)
+        // vis.colorScale = d3.scaleOrdinal()
+        //     .range(vis.colors)
+        //     .domain(vis.cumulativeWeights);
+        //
+        // vis.categoryScale = d3.scaleOrdinal()
+        //     .range(vis.filteredWeightsForDisplay.map(((w) => w.key)))
+        //     .domain(vis.cumulativeWeights);
+
+        vis.categoryScale = d3.scaleThreshold()
+            .range(d3.range(vis.filteredWeightsForDisplay.length))
             .domain(vis.cumulativeWeights);
 
         // try to keep the same weights together
@@ -151,19 +168,9 @@ class bubbleVis {
             .attr('y', (d, i) => i * 15)
             .attr('fill', (d, i) => vis.colors[i]);
 
-        vis.legendText = vis.legend.selectAll('text')
-            .data(vis.filteredWeightsForDisplay)
-            .enter()
-            .append('text')
-            .attr('class', 'legend-text')
-            .attr('x', 15)
-            .attr('y', (d, i) => i * 15 + 10)
-            .text((d) => {
-                if (d.key.length > 30)
-                    return d.key.substr(0, 30) + '...';
-                else
-                    return d.key;
-            });
+        vis.tooltip = d3.select('body').append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'pieTooltip')
 
         vis.updateAreaVis();
         vis.updateBubbleVis();
@@ -171,7 +178,7 @@ class bubbleVis {
 
     updateAreaVis() {
         let vis = this;
-        vis.incomey.domain([0, vis.totalIncome]);
+        vis.incomey.domain([0, vis.baseIncome]);
 
         let current_x = 0;
         let pathIncomeData = d3.range(10).map((i) => {
@@ -207,27 +214,54 @@ class bubbleVis {
 
     updateBubbleVis() {
         let vis = this;
+
         vis.nodes = d3.range(vis.currentCpi).map(
             (i) => ({
                 x: vis.width/4,
                 y: vis.height/2,
                 i: i,
-                r: d3.randomUniform()() + 3.5
+                r: d3.randomUniform(-1, 1)() + vis.baseRadius
             }));
 
         vis.sim = d3.forceSimulation(vis.nodes)
             .force("x", d3.forceX(vis.width / 4).strength(0.01))
             .force("y", d3.forceY().y((d) => vis.y(d.i/10)).strength(0.05))
-            .force("collide", d3.forceCollide(7.5));
+            .force("collide", d3.forceCollide(vis.baseRadius*1.25));
 
         vis.nodeCircles = vis.collection.selectAll('circle')
             .data(vis.nodes)
             .enter()
             .append('circle')
             .attr('r', (d) => d.r )
-            .attr('fill', (d) => vis.colorScale(d.i/10))
+            .attr('fill', (d) => vis.colors[vis.categoryScale(d.i)])
             .attr('cx', (d) => d.x)
             .attr('cy', (d) => d.y);
+
+        vis.nodeCircles.on('mouseover', function(event, d) {
+
+            let category = vis.filteredWeightsForDisplay[vis.categoryScale(d.i)].key;
+
+            let tooltip_text = '';
+            vis.filteredWeightsForDisplay.forEach((w) => {
+                if (w.key === category)
+                    tooltip_text += `<span class="emphasis"><strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}</span><br>`
+                else
+                    tooltip_text += `<strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}<br>`
+            })
+
+            vis.tooltip
+                .style("opacity", 1)
+                .style("left", event.pageX + 20 + "px")
+                .style("top", event.pageY + "px")
+                .html(`<div class="tooltip-holder">${tooltip_text}</div>`);
+        }).on('mouseout', function(event, d){
+            vis.tooltip
+                .style("opacity", 0)
+                .style("left", 0)
+                .style("top", 0)
+                .html(``);
+        })
+
 
         vis.sim.on('tick', () => {
             vis.nodeCircles
@@ -235,30 +269,57 @@ class bubbleVis {
                 .attr('cy', d => d.y)
         });
 
+        vis.legendText = vis.legend.selectAll('text')
+            .data(vis.filteredWeightsForDisplay);
+
+        vis.legendText.enter()
+            .append('text')
+            .attr('class', 'legend-text')
+            .merge(vis.legendText)
+            .attr('x', 15)
+            .attr('y', (d, i) => i * 15 + 10)
+            .text((d) => {
+                if (d.key.length > 30)
+                    return d.key.substr(0, 30) + '... : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);
+                else
+                    return d.key + ' : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);
+            });
+
+
+
     }
 
     updateCpi(cpi) {
         let vis = this;
         vis.currentCpi = cpi;
+        vis.nodeCircles.remove();
+
         vis.updateBubbleVis();
+    }
+
+    calibrateSavings() {
+        let vis = this;
+        vis.currentSavings = vis.currentIncome - vis.currentExpense;
+        // update all the texts
+        vis.incomeText.text("Income: " + vis.currencyFormat(vis.currentIncome));
+        vis.expenseText.text(' Expense: ' + vis.currencyFormat(vis.currentExpense));
+        vis.savingsText.text('Savings: ' + vis.currencyFormat(vis.currentSavings));
     }
 
     animateSavings() {
         let vis = this;
 
-        if (vis.currentSavings < vis.totalIncome) {
+        if (vis.currentIncome < vis.baseIncome) {
             setTimeout( function() {
                 vis.currentIncome += 1000;
-                vis.currentSavings += 1000;
-                vis.incomeText.text('Averge Income: $ ' + vis.currentIncome)
+                vis.calibrateSavings();
                 vis.updateAreaVis();
                 vis.animateSavings();
-            }, 50 )
+            }, 5 )
         } else {
             setTimeout(function() {
-                vis.expenseText.text('Average Expense: $ ' + vis.currentExpense);
                 vis.animateExpense();
-            }, 2000);
+            }, 500);
         }
 
     }
@@ -266,45 +327,42 @@ class bubbleVis {
     animateExpense() {
         let vis = this;
 
-        if (vis.currentSavings > (vis.totalIncome - vis.currentExpense)) {
+        if (vis.currentExpense < vis.baseExpense) {
             setTimeout( function() {
-                vis.currentSavings -= 1000;
-                vis.savingsText.text('Averge Savings: $ ' + vis.currentSavings)
+                vis.currentExpense += Math.min(1000, (vis.baseExpense - vis.currentExpense));
+                vis.calibrateSavings();
                 vis.updateAreaVis();
                 vis.animateExpense();
-            }, 50 )
+            }, 5 )
         } else {
             vis.legend.attr('opacity', 1)
-            setTimeout(vis.updateCpi(vis.baseCpi), 2000);
-        }
-    }
-
-    updateExpense() {
-        let vis = this;
-        if (vis.currentSavings > (vis.totalIncome - vis.currentExpense)) {
-            setTimeout( function() {
-                vis.currentSavings -= 1000;
-                vis.savingsText.text('Averge Savings: $ ' + vis.currentSavings)
-                vis.updateAreaVis();
-                vis.animateExpense();
-            }, 50 )
-        } else if (vis.currentSavings < (vis.totalIncome - vis.currentExpense)) {
-            setTimeout( function() {
-                vis.currentSavings += 1000;
-                vis.savingsText.text('Averge Savings: $ ' + vis.currentSavings)
-                vis.updateAreaVis();
-                vis.animateExpense();
-            }, 50 )
+            setTimeout(vis.updateCpi(vis.baseCpi), 50);
         }
     }
 
     changeInflation(value) {
         let vis = this;
 
-        vis.currentExpense = vis.actualExpense * (1 + value/100);
-        vis.updateExpense()
-
+        vis.currentInflation = value;
+        vis.currentExpense = vis.baseExpense * (1 + value/100);
         vis.currentCpi = vis.baseCpi * (1 + value/100);
+
+        vis.calibrateSavings();
+        vis.updateAreaVis();
+        vis.updateCpi(vis.currentCpi);
+
+    }
+
+    changeBaseIncomeExpense(income, expense) {
+        let vis = this;
+
+        vis.baseIncome = income;
+        vis.baseExpense = expense;
+
+        vis.currentIncome = vis.baseIncome;
+        vis.currentExpense = vis.baseExpense * (1 + vis.currentInflation/100);
+        vis.calibrateSavings();
+        vis.updateAreaVis();
         vis.updateCpi(vis.currentCpi);
 
     }

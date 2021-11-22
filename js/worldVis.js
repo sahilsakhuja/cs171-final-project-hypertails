@@ -29,7 +29,7 @@ class MapVis {
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
-        console.log('yoyooyo')
+        // console.log('yoyooyo')
 
         vis.path = d3.geoPath();
         vis.projection = d3.geoMercator()
