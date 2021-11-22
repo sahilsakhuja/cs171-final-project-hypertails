@@ -42,18 +42,18 @@
     "Miscellaneous goods and services": 4.81426392015529
   },
   "Turkey": {
-    "Food and non-alcoholic beverages": 259.439,
-    "Alcoholic Beverages, Tobacco, and Narcotics": 48.766,
-    "Clothing and footwear": 58.697,
-    "Housing, Water, Electricity, Gas and Other Fuels": 153.568,
-    "Furnishings, household equipment and routine household maintenance": 86.412,
-    "Health": 32.493,
-    "Transport": 154.948,
-    "Communication": 46.438,
-    "Recreation and culture": 30.08,
-    "Education": 22.781,
-    "Restaurants and hotels": 59.115,
-    "Miscellaneous goods and services": 47.263
+    "Food and non-alcoholic beverages": 25.9439,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 4.8766,
+    "Clothing and footwear": 5.8697,
+    "Housing, Water, Electricity, Gas and Other Fuels": 15.3568,
+    "Furnishings, household equipment and routine household maintenance": 8.6412,
+    "Health": 3.2493,
+    "Transport": 15.4948,
+    "Communication": 4.6438,
+    "Recreation and culture": 3.008,
+    "Education": 2.2781,
+    "Restaurants and hotels": 5.9115,
+    "Miscellaneous goods and services": 4.7263
   },
   "Zimbabwe": {
     "Food and non-alcoholic beverages": 31.3,
@@ -68,5 +68,19 @@
     "Education": 4.3,
     "Restaurants and hotels": 1.1,
     "Miscellaneous goods and services": 6.5
+  },
+  "UnitedStates": {
+    "Food and non-alcoholic beverages": 7.71775,
+    "Alcoholic Beverages, Tobacco, and Narcotics": 1.161167,
+    "Clothing and footwear": 2.7195,
+    "Housing, Water, Electricity, Gas and Other Fuels": 36.62883,
+    "Furnishings, household equipment and routine household maintenance": 4.0245,
+    "Health": 7.541,
+    "Transport": 13.12758,
+    "Communication": 3.426,
+    "Recreation and culture": 6.796333,
+    "Education": 2.809083,
+    "Restaurants and hotels": 7.744167,
+    "Miscellaneous goods and services": 6.302833
   }
 }

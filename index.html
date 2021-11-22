@@ -8,7 +8,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Exploring Hyperinflation</title>
@@ -29,7 +29,13 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			<div class="row">
 				<div class="col-12 text-center">
 					<h1>HyperInflation: In the US and Around the World!</h1>
-					<img src="img/Header_Tweets.png" style="width: 100vh;" />
+					<p>
+						On Oct 23, Jack Dorsey (CEO of Twitter), sent out a Tweet claiming that the US, followed by the rest of the world
+						is entering a period of "Hyperinflation". This view, as expected, made dramatic headlines in all leading publications. This
+						dashboard has been created for normal people to understand Hyperinflation, it's causes and components and explore the current status
+						of inflation in the US.
+					</p>
+					<img src="img/Header_Tweets.png" class="shadow-lg" style="width: 95vh;" />
 				</div>
 			</div>
 		</div>
@@ -41,6 +47,22 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	<section class="vertical-scrolling">
 		<div class="container-fluid">
 			<div class="row">
+				<div class="col-8 offset-2">
+					<p>
+						In economics, hyperinflation is very high and typically accelerating inflation.
+						It quickly erodes the real value of the local currency, as the prices of all goods increase. Economists broadly regard a
+						hyperinflationary episode as starting in the month that the monthly inflation rate exceeds 50%,
+						and as ending when the monthly inflation rate drops below 50% and stays that way for at least a year.
+					</p>
+					<p>
+						Below, you can see a small infographic of the key causes of the Hyperinflation. In the visualization on the right, you can
+						observe the growth in Consumer Price Index (CPI) - one of the critical metrics to track inflation - in Sudan which has recently
+						experienced a hyper-inflationary period. A small example to understand this graph more accurately - a typical item which cost $30 in Sudan
+						in 1996, today costs more than $ 13,000!
+					</p>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-6 text-center">
 					<img src="img/what-is-hyperinflation-the-balance.png" class="shadow-lg" style="width: 90%;" />
 					<br>
@@ -48,8 +70,8 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						Reference: <a href="https://www.thebalance.com/what-is-hyperinflation-definition-causes-and-examples-3306097">thebalance.com</a>
 					</div>
 				</div>
-				<div class="col-6">
-					Janice Graph
+				<div class="col-6" id="animatedBarChartVis">
+
 				</div>
 			</div>
 		</div>
@@ -61,12 +83,34 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	<section class="vertical-scrolling">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12" id="worldVis">
-					World Viz: Andrew
+				<div class="col-8 offset-2">
+					<p>
+						The below choropleth map can be used to explore the inflation in different countries over time.
+					</p>
 				</div>
 			</div>
-		</div>
-		<div class="scroll-icon">
+			<div class="row">
+				<div class="col-8 offset-2">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12">
+								<div id="map-tooltip">
+
+								</div>
+								<div id="mapvisual">
+									<div id="choropleth-map" style="height: 50vh; width:100%;"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="brushDiv" style="height: 10vh; width:100%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		<div class="scroll-icon">
 			<p>What are the components of inflation and what leads to hyper inflation?</p>
 			<a href="#fourthSection" class="icon-up-open-big"></a>
 		</div>
@@ -87,6 +131,8 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<p>
 						In the Visualizations below, you can explore the inflation rate over time in some of the countries which have
 						seen hyperinflationary periods in their history and the corresponding breakdown of this inflation into it's various components.
+						One key insight here is that "Transportation" as a category shows significant growth in a Hyperinflationary situation. This could make sense
+						by considering that Hyperinflation leads to devaluation of currency and correspondingly, higher oil costs since oil is mostly an "import".
 					</p>
 					<p>
 						Select Country:
@@ -120,71 +166,65 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			</div>
 		</div>
 		<div class="scroll-icon">
-			<p>Next...</p>
+			<p>What is the CPI in USA right now?</p>
 			<a href="#fifthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 
 	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-6" id="inflation_text">
-				<p><span class="bigger">Hyperinflation</span> refers to rapid, excessive, and general price increases
-					in an economy, typically more than <span class="bigger">50%</span> per month.</p>
-				<p>Hyperinflations are usually caused by rapid growth of money supply to cover for large government expenditures.
-					It is not uncommon to see hyperinflations in developing countries such as Zimbabwe or Venezuela, yet it has
-					never been an issue to developed countries such as US or UK.
-					</br>
-					</br>
-					However, since Covid-19, we have seen a huge disruption in supply chain as well as labor shortages that cause prices
-					to increase sharply. According to the most recent data in October 2021, the US Consumer Price Index surged <span class="bold">6.2%</span>
-					from a year ago, the biggest inflation surge in 30 years. Fuel oil prices soared <span class="bold">12.3%</span> in October 2021 while energy prices
-					are up <span class="bold">30%</span> for 12-month period. All these factors have a big impact on the current recovery process of the economy post-Covid 19,
-					the currency value, and the future consumer spending.
-					</br>
-					</br>
+		<div class="container">
+			<div class="row">
+				<div class="col-8 offset-2">
+					<div class="linechart-text">
+						By exploring the commodity inflation across the world we can discover CPI (consumer price index) has steadily increased throughout the years. From this visuaisation we are able to compare each invidiual commodity and see if there are any outliers. The one commodity - transportation is alarming since from 2021 onwards it has spiked dramatically causing concerns to hyperflation.
+					</div>
+				</div>
 			</div>
-			<div class="col-6">
-				<h5>Top 5 Hyperinflation Countries</h5></br>
-				<select id='categorySelector' class="custom-select align-self-center" style="width: 50%" onchange="categoryChange()">
-					<option value="angola">Angola</option>
-					<option value="bulgaria">Bulgaria</option>
-					<option value="sudan" selected>Sudan</option>
-					<option value="turkey">Turkey</option>
-					<option value="zimbabwe">Zimbabwe</option>
-				</select>
-				<p>
-				</p>
-				<div id="top5hyper"></div>
+			<div class="row">
+				<div class="col-8 offset-2">
+					<div class ="linechart">
+						<div id = "commodityVis"></div>
+						<div id = "commodityLegend"></div>
+					</div>
+				</div>
 			</div>
+		</div>
+		<div class="scroll-icon">
+			<p>And what can happen in the future?</p>
+			<a href="#sixthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-9" id="commodityinflation">
+		<div class="container">
+			<div class="row mt-2">
+				<div class="col-8 offset-2">
+					<p>
+						In the US, the average person earns approximately $65,000 per year and the average expenses are $ 63,000 per year.
+						Hence, savings per person are about $2,000 per year. In case of hyperinflation in the future, the expenses would increase dramatically.
+						You can use the "Inflation Rate" configurator below to see the effect of different levels of inflation on Savings
+						and also see, on the right, the amount of expected expenditure in different categories.
+					</p>
+				</div>
 			</div>
-			<div class="col-3">
-				Some text here for commodity inflation
+			<div class="row mt-2">
+				<div class="col-12 text-center">
+					<p>Inflation Rate:</p>
+					<p>
+						<button type="button" class="btn btn-success" onclick="decreaseInflation()">-</button>&nbsp;&nbsp;&nbsp;
+						<input type="hidden" id="inflationAmount" value=0><span class="" id="inflationAmountText">0.00%</span>&nbsp;&nbsp;&nbsp;
+						<button type="button" class="btn btn-danger" onclick="increaseInflation()">+</button>
+
+					</p>
+				</div>
+			</div>
+			<div class="row mt-5">
+				<div class="col-12" id="bubbleVis" style="height: 100vh;">
+
+				</div>
 			</div>
 		</div>
 	</section>
-	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-3">
-				Text here for first increase vs last increase
-			</div>
-			<div class="col-9" id="firstincrease">
-			</div>
-		</div>
-	</section>
-	<section class="vertical-scrolling">
-		<div class="row">
-			<div class="col-3">
-				<h1> Conclusion</h1>
-			</div>
-			<div class="col-9" id="firstincrease">
-			</div>
-		</div>
-	</section>
+
 </div>
 
 
@@ -197,9 +237,13 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 
 <!-- own js files -->
 <script src="js/commodityVis.js"></script>
+<script  src="js/areaVis.js"></script>
 <script  src="js/top5hyperVis.js"></script>
 <script src="js/donutVis.js"></script>
 <script src="js/brushVis.js"></script>
+<script src="js/bubbleVis.js"></script>
+<script src="js/worldVis.js"></script>
+<script src="js/mapBrushVis.js"></script>
 <script src="js/main.js"></script>
 
 <!-- fullPage -->

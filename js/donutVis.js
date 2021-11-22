@@ -33,7 +33,7 @@ class donutVis {
         // set first year as 7 years ago
         this.startYear = this.lastYear - 7;
         this.endYear = this.lastYear;
-        this.colors = ["#d376e3","#334752","#664c6b","#4a913d","#769aad","#42fc21","#27631c","#5e3d63","#f2a277","#2faff5", "#6269A8", "#222759"];
+        this.colors = categoryColors;
 
         // sort the data by date - just in case
         // we need to do this only once
@@ -84,6 +84,38 @@ class donutVis {
         vis.piePadding = 2; // the padding between 2 donut charts
         vis.innerMostRadius = 10; // the inner radius of the inner most donut
         vis.outerMostRadius = Math.min(vis.pieWidth, vis.pieHeight) / 2; // the outer radius of the outer most donut
+
+        // draw the year holders
+        let right_x = vis.pieWidth / 2 - 50;
+        let top_y = - vis.pieHeight / 2;
+
+        vis.pieChartGroup.append('line')
+            .attr('id', 'line-center')
+            .attr('class', 'year-line')
+            .attr('x1', 0)
+            .attr('y1', 0)
+            .attr('x2', right_x)
+            .attr('y2', 0);
+
+        vis.startYearText = vis.pieChartGroup.append('text')
+            .attr('id', 'year-text-center')
+            .attr('class', 'year-text')
+            .attr('x', right_x - 20)
+            .attr('y', -10);
+
+        vis.pieChartGroup.append('line')
+            .attr('id', 'line-top')
+            .attr('class', 'year-line')
+            .attr('x1', 0)
+            .attr('y1', top_y)
+            .attr('x2', right_x)
+            .attr('y2', top_y);
+
+        vis.endYearText = vis.pieChartGroup.append('text')
+            .attr('id', 'year-text-center')
+            .attr('class', 'year-text')
+            .attr('x', right_x - 20)
+            .attr('y', top_y + 20);
 
         // draw the initial legend
         vis.legend = vis.svg.append('g')
@@ -205,15 +237,8 @@ class donutVis {
                 'value': vis.filteredWeights[k]
             })
         });
-
-
-        // sort the weights and set the weights below 1% to inactive (since we only want to show some of the values in the inital plot)
-        // we need to do this only once
-        vis.filteredWeightsForDisplay.sort((a, b) => b.value - a.value);
-        // vis.filteredWeightsForDisplay.map((w) => {
-        //     if (w.value <= 5)
-        //         w.active = false;
-        // });
+        // sort the weights in alphabetic order
+        vis.filteredWeightsForDisplay = vis.filteredWeightsForDisplay.sort((a, b) => a.key.localeCompare(b.key));
 
         // apply the weights to the filtered data
         vis.displayData = vis.filteredData.map((d) => {
@@ -259,6 +284,9 @@ class donutVis {
 
         vis.pieWidth =  ((vis.outerMostRadius - vis.innerMostRadius) / vis.displayData.length) - vis.piePadding; // the
 
+        // // remove all arcs : transition effects are lost!
+        // vis.pieChartGroup.selectAll('.arc').remove();
+
         vis.displayData.forEach((d, i) => {
             let innerRadius = vis.innerMostRadius + vis.pieWidth * i + vis.piePadding * i;
             let outerRadius = innerRadius + vis.pieWidth;
@@ -281,10 +309,44 @@ class donutVis {
                     return vis.colors[_d.data.weight_idx];
                 })
                 .attr('opacity', 0.25 + i * 0.07);
+            //     .on('mouseover', function(event, d){
+            //
+            //         d3.select(this)
+            //             .attr('stroke-width', '2px')
+            //             .attr('stroke', 'black')
+            //             .attr('fill', 'rgba(173,222,255,0.62)')
+            //
+            //         vis.tooltip
+            //             .style("opacity", 1)
+            //             .style("left", event.pageX + 20 + "px")
+            //             .style("top", event.pageY + "px")
+            //             .html(`<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+            //      <h3>Arc with index #${d.index}<h3>
+            //      <h4> value: ${d.value}</h4>
+            //      <h4> startAngle: ${d.startAngle}</h4>
+            //      <h4> endAngle: ${d.endAngle}</h4>
+            //      <h4> data: ${JSON.stringify(d.data)}</h4>
+            //  </div>`);
+            //
+            //     }).on('mouseout', function(event, d){
+            //     d3.select(this)
+            //         .attr('stroke-width', '0px')
+            //         .attr("fill", d => d.data.color)
+            //
+            //     vis.tooltip
+            //         .style("opacity", 0)
+            //         .style("left", 0)
+            //         .style("top", 0)
+            //         .html(``);
+            // });
 
             arcs.exit().remove();
 
         });
+
+        // update the year texts
+        vis.startYearText.text(vis.startYear);
+        vis.endYearText.text(vis.endYear);
 
         vis.legendRects = vis.legend.selectAll('rect')
             .data(vis.filteredWeightsForDisplay);

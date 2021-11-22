@@ -129,6 +129,12 @@ SAHIL
   stroke: var(--earth-yellow);
 }
 
+.year-line {
+  stroke: var(--earth-yellow);
+  stroke-width: 2;
+  stroke-dasharray: 2;
+}
+
 /*********************************
 
 JANICE

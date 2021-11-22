@@ -36,12 +36,12 @@
   font-size: 2.5em;
   display: block;
   transform: rotateX(180deg);
-  color: black;
+  color: #585b56;
   transition: color .3s;
 }
 
 .icon-up-open-big:hover:after {
-	color: white;	
+	color: #937d64;
 }
 
 .scroll-icon {
@@ -270,7 +270,7 @@ h3 {
 
 #fp-nav ul li a span, 
 .fp-slidesNav ul li a span {
-	background: white;
+	background: #585b56;
 	width: 8px;
 	height: 8px;
 	margin: -4px 0 0 -4px;
@@ -285,7 +285,7 @@ h3 {
 	margin: -8px 0 0 -8px;
 	background: transparent;
 	box-sizing: border-box;
-	border: 1px solid #24221F;
+	border: 1px solid #937d64;
 }
 
 
