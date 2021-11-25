@@ -302,7 +302,7 @@ class bubbleVis {
         vis.currentSavings = vis.currentIncome - vis.currentExpense;
         // update all the texts
         vis.incomeText.text("Income: " + vis.currencyFormat(vis.currentIncome));
-        vis.expenseText.text(' Expense: ' + vis.currencyFormat(vis.currentExpense));
+        //vis.expenseText.text(' Expense: ' + vis.currencyFormat(vis.currentExpense));
         vis.savingsText.text('Savings: ' + vis.currencyFormat(vis.currentSavings));
     }
 

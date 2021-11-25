@@ -6,7 +6,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 ---------------->
 
 <!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="description" content="">
@@ -27,27 +27,43 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	<section class="vertical-scrolling">
 		<div class="container">
 			<div class="row">
-				<div class="col-12 text-center">
-					<h1>HyperInflation: In the US and Around the World!</h1>
-					<p>
-						On Oct 23, Jack Dorsey (CEO of Twitter), sent out a Tweet claiming that the US, followed by the rest of the world
-						is entering a period of "Hyperinflation". This view, as expected, made dramatic headlines in all leading publications. This
-						dashboard has been created for normal people to understand Hyperinflation, it's causes and components and explore the current status
-						of inflation in the US.
-					</p>
+				<div class="col-9 text-center">
+					<h1 style="font-size: 32px;">Hyperinflation: Is It Really Coming?</h1>
 					<img src="img/Header_Tweets.png" class="shadow-lg" style="width: 95vh;" />
+				</div>
+				<div class="col-3 text-center">
+					<br>
+					<br>
+					<br>
+					<br>
+					<br>
+					<p style="font-size: 20px">
+						On Oct 23, Twitter's CEO, Jack Dorsey, sent out a tweet claiming that <span class="bold">"the US, followed by the rest of the world
+						is entering a period of hyperinflation"</span>. This view made dramatic headlines in all leading publications.
+						<br><br>
+						This dashboard has been created to provide insights into hyperinflation and is also
+						a tool for normal people to explore the current status of inflation in the US and its potential impact on everyday life .
+					</p>
 				</div>
 			</div>
 		</div>
+
 		<div class="scroll-icon">
-			<p>What is HyperInflation?</p>
+			<br><br>
+			<h3 style="font-size: 24px">What is HyperInflation?</h3>
 			<a href="#secondSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
 	<section class="vertical-scrolling">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-8 offset-2">
+				<div class="col-6 text-center">
+					<h3>Tell Me About Hyperinflation ....</h3>
+				</div>
+				<div class="col-6 text-center">
+					<h3>Hyperinflation In Sudan: A Prime Example</h3>
+				</div>
+				<!---<div class="col-8 offset-2">
 					<p>
 						In economics, hyperinflation is very high and typically accelerating inflation.
 						It quickly erodes the real value of the local currency, as the prices of all goods increase. Economists broadly regard a
@@ -60,7 +76,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						experienced a hyper-inflationary period. A small example to understand this graph more accurately - a typical item which cost $30 in Sudan
 						in 1996, today costs more than $ 13,000!
 					</p>
-				</div>
+				</div>-->
 			</div>
 			<div class="row">
 				<div class="col-6 text-center">
@@ -76,7 +92,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			</div>
 		</div>
 		<div class="scroll-icon">
-			<p>Let's explore inflation rates around the World</p>
+			<h3 style="font-size: 24px">Let's explore inflation rates around the world</h3>
 			<a href="#thirdSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
@@ -84,10 +100,12 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-8 offset-2">
-					<p>
+					<!--<h3>
 						The below choropleth map can be used to explore the inflation in different countries over time.
-					</p>
+					</h3>-->
+					<h3>A World Tour Of Inflation </h3>
 				</div>
+
 			</div>
 			<div class="row">
 				<div class="col-8 offset-2">
@@ -104,14 +122,14 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<div id="brushDiv" style="height: 10vh; width:100%;"></div>
+								<div id="brushDiv" style="height: 15vh; width:100%;"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>		<div class="scroll-icon">
-			<p>What are the components of inflation and what leads to hyper inflation?</p>
+			<h3 style="font-size: 24px">What are the core indicators of inflation?</h3>
 			<a href="#fourthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
@@ -119,7 +137,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-8 offset-2">
-					<p>
+					<!--<p>
 						Hyperinflation increases stock market prices, wipes out the purchasing power of private and public savings,
 						distorts the economy in favor of the hoarding of real assets, causes the monetary base (whether specie or hard currency) to flee the country,
 						and makes the afflicted area anathema to investment.
@@ -134,25 +152,42 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						One key insight here is that "Transportation" as a category shows significant growth in a Hyperinflationary situation. This could make sense
 						by considering that Hyperinflation leads to devaluation of currency and correspondingly, higher oil costs since oil is mostly an "import".
 					</p>
-					<p>
-						Select Country:
+					<p>-->
+						<!--Select Country:
 						<select id='countrySelector' class="custom-select align-self-center">
 							<option value="Angola">Angola</option>
 							<option value="Bulgaria">Bulgaria</option>
 							<option value="Sudan" selected>Sudan</option>
 							<option value="Turkey">Turkey</option>
 							<option value="Zimbabwe">Zimbabwe</option>
-						</select>
+						</select>-->
 
 					</p>
 
 				</div>
 			</div>
 			<div class="row">
+
+			</div>
+			<div class="row">
+				<h3>Trending In Top Hyperinflation Countries</h3>
+				
 				<div class="col-6" id="top5hyper" style="height: 45vh; padding-left: 25px;">
+					<p style="font-weight: bold; font-size: 15px">Select Country:
+					<select id='countrySelector' class="custom-select align-self-center">
+						<option value="Angola">Angola</option>
+						<option value="Bulgaria">Bulgaria</option>
+						<option value="Sudan" selected>Sudan</option>
+						<option value="Turkey">Turkey</option>
+						<option value="Zimbabwe">Zimbabwe</option>
+					</select>
+					</p>
 
 				</div>
+				<br>
+				<br>
 				<div class="col-6" id="firstincrease" style="height: 45vh; padding-left: 25px;">
+					<h3>Inflation Indicators</h3>
 
 				</div>
 			</div>
@@ -166,7 +201,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			</div>
 		</div>
 		<div class="scroll-icon">
-			<p>What is the CPI in USA right now?</p>
+			<h3 style="font-size: 24px">What is CPI in the US right now?</h3>
 			<a href="#fifthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
@@ -176,21 +211,30 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			<div class="row">
 				<div class="col-8 offset-2">
 					<div class="linechart-text">
-						By exploring the commodity inflation across the world we can discover CPI (consumer price index) has steadily increased throughout the years. From this visuaisation we are able to compare each invidiual commodity and see if there are any outliers. The one commodity - transportation is alarming since from 2021 onwards it has spiked dramatically causing concerns to hyperflation.
+						<!--By exploring the commodity inflation across the world we can discover CPI
+						(consumer price index) has steadily increased throughout the years.
+						From this visuaisation we are able to compare each invidiual commodity and see
+						if there are any outliers. The one commodity - transportation is alarming since from
+						2021 onwards it has spiked dramatically causing concerns to hyperflation.-->
+						<h3>Inflation Trending In The US</h3>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-8 offset-2">
+				<div class="col-8">
 					<div class ="linechart">
 						<div id = "commodityVis"></div>
+					</div>
+				</div>
+				<div class="col-4">
+					<div class ="linechart">
 						<div id = "commodityLegend"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="scroll-icon">
-			<p>And what can happen in the future?</p>
+			<h3>What Does Inflation Mean to Your Savings?</h3>
 			<a href="#sixthSection" class="icon-up-open-big"></a>
 		</div>
 	</section>
@@ -198,18 +242,21 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 		<div class="container">
 			<div class="row mt-2">
 				<div class="col-8 offset-2">
-					<p>
+					<!--<p>
 						In the US, the average person earns approximately $65,000 per year and the average expenses are $ 63,000 per year.
 						Hence, savings per person are about $2,000 per year. In case of hyperinflation in the future, the expenses would increase dramatically.
 						You can use the "Inflation Rate" configurator below to see the effect of different levels of inflation on Savings
 						and also see, on the right, the amount of expected expenditure in different categories.
-					</p>
+					</p>-->
+					<h3>Let's Get Down To The Numbers ...</h3>
 				</div>
 			</div>
 			<div class="row mt-2">
-				<div class="col-2 offset-2">
-					<h3>Settings:</h3>
+				<div class="col-3 offset-2">
+					<br>
+					<h4 style="font-size: 20px">Enter Your Income & Expense </h4>
 				</div>
+
 				<div class="col-2">
 					<label for="baseIncome">Income (in $)</label>
 					<input type="text" id="baseIncome" value="65000" onchange="updateBubbleSettings()">
@@ -218,7 +265,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<label for="baseExpense">Expense (in $)</label>
 					<input type="text" id="baseExpense" value="63000" onchange="updateBubbleSettings()">
 				</div>
-				<div class="col-2 text-center">
+				<!--<div class="col-2 text-center">
 					<p>Inflation Rate:</p>
 					<p>
 						<button type="button" class="btn btn-success" onclick="decreaseInflation()">-</button>
@@ -226,7 +273,16 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						<button type="button" class="btn btn-danger" onclick="increaseInflation()">+</button>
 
 					</p>
-				</div>
+				</div>-->
+			</div>
+			<div class="col-4 text-center">
+				<p>Inflation Rate:</p>
+				<p>
+					<button type="button" class="btn btn-success" onclick="decreaseInflation()">-</button>
+					<input type="hidden" id="inflationAmount" value=0><span class="" id="inflationAmountText">0.00%</span>
+					<button type="button" class="btn btn-danger" onclick="increaseInflation()">+</button>
+
+				</p>
 			</div>
 			<div class="row mt-5">
 				<div class="col-12" id="bubbleVis" style="height: 100vh;">

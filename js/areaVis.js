@@ -107,8 +107,13 @@ class areaVis {
         vis.svg.append("text")
             .attr("x", -20)
             .attr("y", -5)
-            .text("CPI - Price comparison year on year")
-            .style("font-size", "12px");
+            .text("CPI")
+            .style("font-size", "15px");
+
+        // tooltip
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'barTooltip')
 
         /*// Add right y-axis text
         vis.svg.append("text")
@@ -322,6 +327,35 @@ class areaVis {
             .attr('height', function (d) {
                 return vis.height - vis.yScaleL(0)
             } )
+            // Add tooltip effect
+            .on('mouseover', function(event, d) {
+                d3.select(this)
+                    .attr('stroke-width', '2px')
+                    .attr('stroke', 'black')
+                    .attr('fill', 'rgba(173,222,255,0.62)')
+                vis.tooltip
+                    .style("opacity", 1)
+                    .style("left", event.pageX + 5 + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
+             <h5 style="color: var(--candy-pink)">CPI: ${d['Consumer Price Index']}<h5>                        
+         </div>`);
+
+            })
+            .on('mouseout', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '0px')
+                //.attr("fill", d => d.data.color)
+
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            })
+
+
 
         // Update tooltip
         /*vis.svg.append('rect')

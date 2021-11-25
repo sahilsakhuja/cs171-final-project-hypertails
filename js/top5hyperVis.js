@@ -28,8 +28,8 @@ class topHyperVis {
         let vis = this;
 
         // Adjust by screen size
-        vis.margin = {top: 20, right: 20, bottom: 20, left: 40};
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.margin = {top: 20, right: 20, bottom: 20, left: 55};
+        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - 80 - vis.margin.left - vis.margin.right;
         vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
 
@@ -71,8 +71,8 @@ class topHyperVis {
 
         // Add y-axis text
         vis.svg.append("text")
-            .attr("x", -35)
-            .attr("y", 0)
+            .attr("x", -25)
+            .attr("y", -10)
             .text("CPI");
 
         vis.tooltip_box = vis.svg.append("g")

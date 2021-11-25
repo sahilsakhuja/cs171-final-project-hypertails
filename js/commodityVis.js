@@ -18,7 +18,7 @@ class LineChart {
 
 
 
-        vis.margin = {top: 30, right: 30, bottom: 30, left: 0}
+        vis.margin = {top: 30, right: 30, bottom: 30, left: 30}
         vis.width = 860;
         vis.height = 400;
 
@@ -30,7 +30,7 @@ class LineChart {
 
         vis.legendkey = d3.select("#commodityLegend")
             .append("svg")
-            .attr("width", 200)
+            .attr("width", 425)
             .attr("height", 300);
 
 
@@ -57,11 +57,11 @@ class LineChart {
 
         vis.gYAxis
             .append("text")
-            .attr("x", 0)
-            .attr("y", 10)
+            .attr("x", -15)
+            .attr("y", 20)
             .attr("fill", "black")
             .attr("text-anchor", "start")
-            .text("Consumer Price Index");
+            .text("CPI");
 
         vis.legend = vis.legendkey.append('g')
             .attr('font-family', 'sans-serif');
