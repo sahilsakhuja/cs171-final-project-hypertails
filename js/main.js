@@ -1,4 +1,7 @@
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
 let myMapVis;
 let myBrushVis;
@@ -156,7 +159,9 @@ function decreaseInflation() {
     document.getElementById('inflationAmountText').innerText = newInflation.toFixed(2) + '%';
 }
 
-
+function replayBarChartAnimation() {
+    animatedBarChartVis.replayBarChart();
+}
 
 // Andrew - need to be incorporated
 

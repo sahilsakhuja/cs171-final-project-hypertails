@@ -17,7 +17,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css'><link rel="stylesheet" href="css/fullpage.css">
-
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 	<!-- GOOGLE FONTS -->
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,400italic,300italic' rel='stylesheet' type='text/css'>
 </head>
@@ -55,7 +55,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 		</div>
 	</section>
 	<section class="vertical-scrolling">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-6 text-center">
 					<h3>Tell Me About Hyperinflation ....</h3>
@@ -86,8 +86,10 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						Reference: <a href="https://www.thebalance.com/what-is-hyperinflation-definition-causes-and-examples-3306097">thebalance.com</a>
 					</div>
 				</div>
-				<div class="col-6" id="animatedBarChartVis">
-
+				<div class="col-6 text-end" id="animatedBarChartVis">
+					<button type="button" class="btn btn-success p-2" onclick="replayBarChartAnimation()">Replay</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
 				</div>
 			</div>
 		</div>
