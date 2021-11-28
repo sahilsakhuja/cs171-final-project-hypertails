@@ -13,7 +13,6 @@ class areaVis {
     ) {
         this.parentElement = parentElement;
         this.data = _data;
-        // this.exch = exch;
         this.country = _country;
 
         this.startYear = d3.min(this.data.filter((f) => f.Country === this.country), (d) => d.Date.getFullYear());
@@ -313,6 +312,7 @@ class areaVis {
         vis.rects = vis.svg.selectAll('rect')
             .data(vis.displayData);
 
+
         vis.rects.enter()
             .append("rect")
             .attr("class", ".rects")
@@ -355,7 +355,7 @@ class areaVis {
                     .html(``);
             })
 
-
+        //vis.rects.exit().remove()
 
         // Update tooltip
         /*vis.svg.append('rect')
@@ -471,7 +471,6 @@ class areaVis {
     animateBarChart() {
         let vis = this;
 
-
         vis.svg.selectAll("rect")
             .transition()
             .duration(400)
@@ -483,6 +482,10 @@ class areaVis {
             .style('fill', function (d) {
                 return vis.colors(d['Consumer Price Index']);
             })
+
     }
+
+
+
 
 }

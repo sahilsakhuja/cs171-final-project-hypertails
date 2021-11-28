@@ -87,9 +87,11 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					</div>
 				</div>
 				<div class="col-6 text-end" id="animatedBarChartVis">
-					<button type="button" class="btn btn-success p-2" onclick="replayBarChartAnimation()">Replay</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
+					<button type="button" class="btn btn-success p-2", style="background-color: var(--candy-pink); border: var(--candy-pink)" , onclick="replayBarChartAnimation()">Replay</button>
+					&nbsp;&nbsp;&nbsp;&nbsp
+					<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top"
+						  title="The bar chart displays historical Consumer Price Index (CPI) of Sudan. Hover the bar to see
+								CPI index for each period."></span>
 				</div>
 			</div>
 		</div>
@@ -105,8 +107,15 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<!--<h3>
 						The below choropleth map can be used to explore the inflation in different countries over time.
 					</h3>-->
-					<h3>A World Tour Of Inflation </h3>
+					<h3>A World Tour Of Inflation
+						<span class="fas fa-info-circle", style="font-size: 18px; color: grey; align-content: start" , data-toggle="tooltip" data-placement="top"
+							  title="Hover the map to explore the average inflation rate for each country over selected time period.
+								Use brushing tool to select preferred time period."></span>
+					</h3>
+					
+					
 				</div>
+				
 
 			</div>
 			<div class="row">
@@ -193,10 +202,20 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 				<br>
 				<br>
 				<div class="col-8" id="firstincrease" style="height: 45vh; padding-left: 25px;">
-					<h4><b>Inflation Indicators</b></h4>
+					<h4><b>Inflation Indicators</b>
+						<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top"
+							  title="Select country from drop-down menu to explore past and current inflation trends
+									and indicators. The line chart displays Consumer Price Index (CPI) and the donut chart reflects
+									CPI components & inflation indicators for the selected country. Use brushing tool for preferred time period.">
+
+						</span>
+					</h4>
+
+
 
 				</div>
 			</div>
+
 			<div class="row">
 
 				<div class="col-8 offset-2" id="brushVis" style="height: 20vh;">
@@ -222,8 +241,14 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						From this visuaisation we are able to compare each invidiual commodity and see
 						if there are any outliers. The one commodity - transportation is alarming since from
 						2021 onwards it has spiked dramatically causing concerns to hyperflation.-->
-						<h3>Inflation Trending In The US</h3>
+						<h3>Inflation Trending In The US
+							<span class="fas fa-info-circle" style="font-size: 18px; color: grey" data-toggle="tooltip" data-placement="top"
+								  title="Hover the line to explore the trend in each inflation indicator in the US."></span>
+						</h3>
+
+
 					</div>
+
 				</div>
 			</div>
 			<div class="row">
