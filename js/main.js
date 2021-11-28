@@ -17,7 +17,11 @@ let bubbleChartVisRun = false;
 let selectedCountry = document.getElementById('countrySelector').value;
 let selectedCountryEl = document.getElementById('countrySelector');
 
-let categoryColors = ["#d376e3","#334752","#664c6b","#4a913d","#769aad","#42fc21","#27631c","#5e3d63","#f2a277","#2faff5", "#6269A8", "#222759"];
+// let categoryColors = ["#d376e3","#334752","#664c6b","#4a913d","#769aad","#42fc21","#27631c","#5e3d63","#f2a277","#2faff5", "#6269A8", "#222759"];
+let categoryColors = d3.schemePaired.slice(1);
+let inactiveColor = '#585b56';
+
+// console.log(d3.schemePaired);
 
 data_files = [
     // {
@@ -208,13 +212,15 @@ function initWorldMap(dataArray) {
 //Line Chart
 d3.csv("data/IMF_CPI_US - Country Indexes And Weights.csv").then(csv => {
 
-    const categories = csv.map((row) => {
+    let categories = csv.map((row) => {
         const category = row[csv.columns[0]];
         const categoryName = category.slice(0,5)
 
         const values = csv.columns.slice(1).map((dateColumn) => parseFloat(row[dateColumn]));
         return {categoryName,category, values}
     });
+
+    categories = [categories[0]].concat(categories.slice(1).sort((a, b) => a.category.localeCompare(b.category)))
 
     const parseDate = d3.timeParse("%YM%m");
     const allDates = csv.columns.slice(1).map((dateColumn) => parseDate(dateColumn))

@@ -46,7 +46,7 @@ class bubbleVis {
             return i;
         });
 
-        console.log(this.cumulativeWeights);
+        // console.log(this.cumulativeWeights);
 
         this.currencyFormat = d3.format("$,.2f");
 
@@ -215,59 +215,61 @@ class bubbleVis {
     updateBubbleVis() {
         let vis = this;
 
-        vis.nodes = d3.range(vis.currentCpi).map(
-            (i) => ({
-                x: vis.width/4,
-                y: vis.height/2,
-                i: i,
-                r: d3.randomUniform(-1, 1)() + vis.baseRadius
-            }));
+        // vis.nodes = d3.range(vis.currentCpi).map(
+        //     (i) => ({
+        //         x: vis.width/4,
+        //         y: vis.height/2,
+        //         i: i,
+        //         r: d3.randomUniform(-1, 1)() + vis.baseRadius
+        //     }));
+        //
+        // vis.sim = d3.forceSimulation(vis.nodes)
+        //     .force("x", d3.forceX(vis.width / 4).strength(0.01))
+        //     .force("y", d3.forceY().y((d) => vis.y(d.i/10)).strength(0.05))
+        //     .force("collide", d3.forceCollide(vis.baseRadius*1.25));
+        //
+        // vis.nodeCircles = vis.collection.selectAll('circle')
+        //     .data(vis.nodes)
+        //     .enter()
+        //     .append('circle')
+        //     .attr('r', (d) => d.r )
+        //     .attr('fill', (d) => vis.colors[vis.categoryScale(d.i)])
+        //     .attr('cx', (d) => d.x)
+        //     .attr('cy', (d) => d.y);
+        //
+        // vis.nodeCircles.on('mouseover', function(event, d) {
+        //
+        //     let category = vis.filteredWeightsForDisplay[vis.categoryScale(d.i)].key;
+        //
+        //     let tooltip_text = '';
+        //     vis.filteredWeightsForDisplay.forEach((w) => {
+        //         if (w.key === category)
+        //             tooltip_text += `<span class="emphasis"><strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}</span><br>`
+        //         else
+        //             tooltip_text += `<strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}<br>`
+        //     })
+        //
+        //     vis.tooltip
+        //         .style("opacity", 1)
+        //         .style("left", event.pageX + 20 + "px")
+        //         .style("top", event.pageY + "px")
+        //         .html(`<div class="tooltip-holder">${tooltip_text}</div>`);
+        // }).on('mouseout', function(event, d){
+        //     vis.tooltip
+        //         .style("opacity", 0)
+        //         .style("left", 0)
+        //         .style("top", 0)
+        //         .html(``);
+        // })
+        //
+        //
+        // vis.sim.on('tick', () => {
+        //     vis.nodeCircles
+        //         .attr('cx', d => d.x)
+        //         .attr('cy', d => d.y)
+        // });
 
-        vis.sim = d3.forceSimulation(vis.nodes)
-            .force("x", d3.forceX(vis.width / 4).strength(0.01))
-            .force("y", d3.forceY().y((d) => vis.y(d.i/10)).strength(0.05))
-            .force("collide", d3.forceCollide(vis.baseRadius*1.25));
-
-        vis.nodeCircles = vis.collection.selectAll('circle')
-            .data(vis.nodes)
-            .enter()
-            .append('circle')
-            .attr('r', (d) => d.r )
-            .attr('fill', (d) => vis.colors[vis.categoryScale(d.i)])
-            .attr('cx', (d) => d.x)
-            .attr('cy', (d) => d.y);
-
-        vis.nodeCircles.on('mouseover', function(event, d) {
-
-            let category = vis.filteredWeightsForDisplay[vis.categoryScale(d.i)].key;
-
-            let tooltip_text = '';
-            vis.filteredWeightsForDisplay.forEach((w) => {
-                if (w.key === category)
-                    tooltip_text += `<span class="emphasis"><strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}</span><br>`
-                else
-                    tooltip_text += `<strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}<br>`
-            })
-
-            vis.tooltip
-                .style("opacity", 1)
-                .style("left", event.pageX + 20 + "px")
-                .style("top", event.pageY + "px")
-                .html(`<div class="tooltip-holder">${tooltip_text}</div>`);
-        }).on('mouseout', function(event, d){
-            vis.tooltip
-                .style("opacity", 0)
-                .style("left", 0)
-                .style("top", 0)
-                .html(``);
-        })
-
-
-        vis.sim.on('tick', () => {
-            vis.nodeCircles
-                .attr('cx', d => d.x)
-                .attr('cy', d => d.y)
-        });
+        console.log(vis.filteredWeightsForDisplay);
 
         vis.legendText = vis.legend.selectAll('text')
             .data(vis.filteredWeightsForDisplay);
@@ -279,9 +281,9 @@ class bubbleVis {
             .attr('x', 15)
             .attr('y', (d, i) => i * 15 + 10)
             .text((d) => {
-                if (d.key.length > 30)
-                    return d.key.substr(0, 30) + '... : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);
-                else
+                // if (d.key.length > 30)
+                //     return d.key.substr(0, 30) + '... : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);
+                // else
                     return d.key + ' : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);
             });
 
@@ -292,7 +294,7 @@ class bubbleVis {
     updateCpi(cpi) {
         let vis = this;
         vis.currentCpi = cpi;
-        vis.nodeCircles.remove();
+        // vis.nodeCircles.remove();
 
         vis.updateBubbleVis();
     }
@@ -302,8 +304,8 @@ class bubbleVis {
         vis.currentSavings = vis.currentIncome - vis.currentExpense;
         // update all the texts
         vis.incomeText.text("Income: " + vis.currencyFormat(vis.currentIncome));
-        //vis.expenseText.text(' Expense: ' + vis.currencyFormat(vis.currentExpense));
-        vis.savingsText.text('Savings: ' + vis.currencyFormat(vis.currentSavings));
+        vis.expenseText.text('Expected Expenses: ' + vis.currencyFormat(vis.currentExpense));
+        vis.savingsText.text('Expected Savings: ' + vis.currencyFormat(vis.currentSavings));
     }
 
     animateSavings() {

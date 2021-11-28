@@ -130,7 +130,7 @@ SAHIL
 }
 
 .year-line {
-  stroke: var(--earth-yellow);
+  stroke: var(--davys-grey);
   stroke-width: 2;
   stroke-dasharray: 2;
 }

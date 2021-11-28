@@ -34,6 +34,7 @@ class donutVis {
         this.startYear = this.lastYear - 7;
         this.endYear = this.lastYear;
         this.colors = categoryColors;
+        this.inactiveColor = inactiveColor;
 
         // sort the data by date - just in case
         // we need to do this only once
@@ -71,10 +72,11 @@ class donutVis {
 
         vis.pieChartGroup = vis.svg.append('g')
             .attr('class', 'pie-chart-group')
-            .attr("transform", "translate(" + vis.pieWidth / 2 + "," + vis.pieHeight / 2 + ")");
+            .attr("transform", "translate(" + vis.pieWidth * 2 / 3 + "," + vis.pieHeight / 2 + ")");
 
         vis.pie = d3.pie()
-            .value((d) => d.value);
+            .value((d) => d.value)
+            .sort((a, b) => a.key.localeCompare(b.key));
 
         vis.tooltip = d3.select('body').append('div')
             .attr('class', "tooltip")
@@ -86,7 +88,7 @@ class donutVis {
         vis.outerMostRadius = Math.min(vis.pieWidth, vis.pieHeight) / 2; // the outer radius of the outer most donut
 
         // draw the year holders
-        let right_x = vis.pieWidth / 2 - 50;
+        let right_x = vis.pieWidth * 1 / 3;
         let top_y = - vis.pieHeight / 2;
 
         vis.pieChartGroup.append('line')
@@ -249,7 +251,7 @@ class donutVis {
             new_d.Date = d.Date;
             new_d.PieValues = [];
             vis.filteredWeightsForDisplay.forEach((w, i) => {
-                if (vis.weightState[w.key]) {
+                // if (vis.weightState[w.key]) {
                     new_d.PieValues.push(
                         {
                             'key': w.key,
@@ -259,7 +261,7 @@ class donutVis {
                             'weight_idx': i
                         }
                     )
-                }
+                // }
             });
 
             // vis.filteredWeights.forEach((w, i) => {
@@ -326,9 +328,19 @@ class donutVis {
                 }).on('mouseout', function(event, d){
                 d3.select(this)
                     .attr('stroke-width', '0px')
-                    .attr("fill", (d) => {
-                        return vis.colors[d.data.weight_idx];
-                    });
+                    .attr('fill', (_d) => {
+                        if (vis.weightState[_d.data.key])
+                            return vis.colors[_d.data.weight_idx];
+                        else
+                            return vis.inactiveColor;
+                    })
+                    .attr('opacity', (_d) => {
+                            if (vis.weightState[_d.data.key])
+                                return 1;
+                            else
+                                return 0.25;
+                        }
+                    );
 
                 vis.tooltip
                     .style("opacity", 0)
@@ -340,9 +352,18 @@ class donutVis {
                 .duration(400)
                 .attr('d', arc)
                 .attr('fill', (_d) => {
-                    return vis.colors[_d.data.weight_idx];
+                    if (vis.weightState[_d.data.key])
+                        return vis.colors[_d.data.weight_idx];
+                    else
+                        return vis.inactiveColor;
                 })
-                .attr('opacity', 0.25 + i * 0.07);
+                .attr('opacity', (_d) => {
+                    if (vis.weightState[_d.data.key])
+                        return 1;
+                    else
+                        return 0.25;
+                }
+                );
 
             arcs.exit().remove();
 
