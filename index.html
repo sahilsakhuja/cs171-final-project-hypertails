@@ -134,7 +134,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 		</div>
 	</section>
 	<section class="vertical-scrolling">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-8 offset-2">
 					<!--<p>
@@ -162,32 +162,36 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 							<option value="Zimbabwe">Zimbabwe</option>
 						</select>-->
 
-					</p>
+<!--					</p>-->
 
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-12">
+					<h3>Trending In Top Hyperinflation Countries</h3>
+					<div style="text-align: center">
+						<p style="font-weight: bold; font-size: 15px">Select Country:
+							<select id='countrySelector' class="custom-select align-self-center">
+								<option value="Angola">Angola</option>
+								<option value="Bulgaria">Bulgaria</option>
+								<option value="Sudan" selected>Sudan</option>
+								<option value="Turkey">Turkey</option>
+								<option value="Zimbabwe">Zimbabwe</option>
+							</select>
+						</p>
+					</div>
+				</div>
 
 			</div>
 			<div class="row">
-				<h3>Trending In Top Hyperinflation Countries</h3>
-				
-				<div class="col-6" id="top5hyper" style="height: 45vh; padding-left: 25px;">
-					<p style="font-weight: bold; font-size: 15px">Select Country:
-					<select id='countrySelector' class="custom-select align-self-center">
-						<option value="Angola">Angola</option>
-						<option value="Bulgaria">Bulgaria</option>
-						<option value="Sudan" selected>Sudan</option>
-						<option value="Turkey">Turkey</option>
-						<option value="Zimbabwe">Zimbabwe</option>
-					</select>
-					</p>
+
+				<div class="col-4" id="top5hyper" style="height: 45vh; padding-left: 25px;">
 
 				</div>
 				<br>
 				<br>
-				<div class="col-6" id="firstincrease" style="height: 45vh; padding-left: 25px;">
-					<h3>Inflation Indicators</h3>
+				<div class="col-8" id="firstincrease" style="height: 45vh; padding-left: 25px;">
+					<h4><b>Inflation Indicators</b></h4>
 
 				</div>
 			</div>
