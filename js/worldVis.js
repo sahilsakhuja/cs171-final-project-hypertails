@@ -16,7 +16,7 @@ class MapVis {
 
     initVis() {
         let vis = this;
-        let topo = this.data[0]
+        vis.displayData = this.data[0]
         vis.margin = {top: 30, right: 30, bottom: 30, left: 0};
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
@@ -38,33 +38,10 @@ class MapVis {
             .translate([vis.width / 2, vis.height / 2]);
 
         // Data and color scale
+        
         vis.colorScale = d3.scaleThreshold()
             .domain([0, 5, 10, 15, 20, 25])
-            .range(d3.schemeBlues[7]);
-
-
-        vis.mouseOver = function(d) {
-            d3.selectAll(".Country")
-                .transition()
-                .duration(50)
-                .style("opacity", .8)
-            d3.select(this)
-                .transition()
-                .duration(50)
-                .style("stroke", "black")
-                .style("opacity", 1)
-        }
-
-        vis.mouseLeave = function(d) {
-            d3.selectAll(".Country")
-                .transition()
-                .duration(50)
-                .style("opacity", 1)
-            d3.select(this)
-                .transition()
-                .duration(200)
-                .style("stroke", "transparent")
-        }
+            .range(d3.schemeReds[6]);
 
         // Add tooltip
         vis.tooltip = d3.select("#mapvisual").append('div')
@@ -75,7 +52,7 @@ class MapVis {
         // Draw the map
         vis.svg.append("g")
             .selectAll("path")
-            .data(topo.features)
+            .data(vis.displayData.features)
             .enter()
             .append("path")
             // draw each country
@@ -83,6 +60,42 @@ class MapVis {
                 .projection(vis.projection)
             )
 
+
+
+	var svgLegend = d3.select("#" + vis.parentElement).append('svg')
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .attr("transform", "translate(-900," + vis.height + ")")
+
+    
+	var defs = vis.svg.append('defs');
+
+	var linearGradient = defs.append('linearGradient')
+		.attr('id', 'legend-gradient');
+
+
+	linearGradient.selectAll("stop")
+		.data([{offset: "0%", color: "#ffece4"},{offset: "100%", color: "#c04c4c"}])
+		.enter().append("stop")
+		.attr("offset", (d) => {return d.offset})
+		.attr("stop-color", (d) => { return d.color});
+
+	svgLegend.append("text")
+		.attr("x", 0)
+		.attr("y", 30)
+		.text("Low");
+
+    svgLegend.append("text")
+		.attr("x", 170)
+		.attr("y", 30)
+		.text("High");
+
+	svgLegend.append("rect")
+		.attr("width", 200)
+		.attr("height", 15)
+        .style("position", "absolute")
+        .style("z-index", "10")
+		.style("fill", "url(#legend-gradient)");
 
         vis.wrangleData();
     }
@@ -98,15 +111,13 @@ class MapVis {
             if (Object.keys(filteredByDate).length) {
                 let num = Object.values(filteredByDate).map(i=>Number(i)).slice(0,60)
                 num = num.filter(val => val !== 0  )
-                console.log(num)
 
                 // num = num.filter (arr => arr.length !== 0)
                 if (num.length) {
                     let average = num.reduce((a, b) => (a + b)) / num.length;
-                    console.log(num.length)
                     data.set(row['Country Code'], +average)
                 } else {
-                    data.set(row['Country Code'], -500)
+                    data.set(row['Country Code'], "No Availabe Data")
 
                 }
 
@@ -131,6 +142,7 @@ class MapVis {
 
 
     updateVis() {
+
         let vis = this
         var mouseover = function(event,d) {
 
@@ -140,16 +152,15 @@ class MapVis {
                 .style("stroke", "black")
                 .style("opacity", 1)
 
-            vis.tooltip.html(`
-            <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                <h2>${d.properties.name}</h2>
-                <div> Average Percentage:${(d.total.toFixed(2))}%</div> 
-            
-            </div
-            ` )
-                .style("left", (event.pageX+50) + "px")
-                .style("top", (event.pageY - 28) + "px");
-
+                vis.tooltip
+                .style("opacity", 1)
+                .style("left", event.pageX + 5 + "px")
+                .style("top", event.pageY + "px")
+                .html(`
+     <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
+         <h4 style="color: var(--candy-pink)">${d.properties.name}</h4>
+         <h5 style="color: var(--candy-pink)">Average Percentage:${(d.total.toFixed(2))}%</h5>
+     </div>`);
         }
         var mousemove = function() {
 
@@ -161,6 +172,8 @@ class MapVis {
                 .style("stroke", "none")
                 .style("opacity", 0.8)
         }
+
+
 
 
         // set the color of each country
@@ -189,18 +202,13 @@ class MapVis {
                     .transition()
                     .duration(10)
                     .style("stroke", "transparent")
+                    .style("opacity", .8)
+
                 vis.tooltip.style("display", "none");
 
 
-                console.log('hi')
 
             })
-
-
     }
-
-    // Update the y-axis
-    // vis.svg.select(".y-axis").call(vis.yAxis);
-
 
 }

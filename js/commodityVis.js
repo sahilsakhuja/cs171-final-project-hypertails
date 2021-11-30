@@ -31,7 +31,7 @@ class LineChart {
         vis.legendkey = d3.select("#commodityLegend")
             .append("svg")
             .attr("width", 425)
-            .attr("height", 300);
+            .attr("height", 350);
 
 
         let yValues = vis.data.categories.map((category) => category.values)
@@ -222,8 +222,9 @@ class LineChart {
 
 
             vis.tooltip.html(`${parseDate(cursorDate)}` + "<br/>"  + `${lineCategory}`+ "<br/>" + `${lineValue}` )
-            // .style("left", (vis.x(cursorDate)) + "px")
-            // .style("top", (vis.y(lineValue) ) + "px")
+            .style("left", (400) + "px")
+            .style("top", (170) + "px")
+
 
         }
 

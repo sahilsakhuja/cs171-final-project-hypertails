@@ -166,11 +166,8 @@ mapBrushVis.prototype.updateVis = function () {
     // draw pathOne
     vis.pathOne.datum(vis.preProcessedData)
         .attr("d", vis.area)
-        .attr("fill", "#428A8D")
-        .attr("stroke", "#136D70")
-        .attr("clip-path", "url(#clip_mapBrush)");
-
-
+        .attr("class", 'brush-path')
+        .attr("clip-path", "url(#clip)");
 
     vis.brushGroup
         .call(vis.brush);
