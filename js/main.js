@@ -195,7 +195,7 @@ let promisesMap = [
 
 Promise.all(promisesMap)
     .then(function (data) {
-        data[0].features = data[0].features.filter(d => { return d.properties.name!=="Antarctica"})
+        data[0].features = data[0].features.filter(d => { return d.properties.name!=="Antarctica" && d.properties.name!=="Greenland"})
 
         initWorldMap(data)
     })
