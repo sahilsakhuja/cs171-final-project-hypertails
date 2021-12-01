@@ -25,8 +25,8 @@ This visualization comes with two components: the world map and the brushing too
 to explore to see the average inflation rate for the timeline they select from the brushing tool. As users moves across the timeline,
 the corresponding color on the map will change since inflation rates change over time. Darker shade represent a high inflation while
 lighter shade mean low inflation.
-<br>
-
+<br />
+<br />
 By moving the brushing tool, users will have a big picture of how inflation develops over the time 
 across the world and identify which country experiences high inflation for extensive period of time (darker shade remains with that country 
 as users move brushing tool). The peak in brushing tool itself also reflects the period (1985-1995) in which a lot of countries experience
@@ -34,11 +34,11 @@ high inflation.
 
 <h2>Top Hyperinflation Countries</h2>
 This visualization contains 5 components: drop-down menu, line chart, donut chart, interactive legend, and brushing tool.
-<br>
+<br /><br />
 Users can select from the drop-down menu the country of their preference and the line chart & donut chart will be activated and change
 accordingly. They can use brushing tool to select the timeline and both charts  will adjust accordingly. Moreover, users can hover on
 the donut chart and see details of each inflation indicator over time.
-<br>
+<br /><br />
 Another feature is the interactive legend: users can turn any category on and off and the donut chart will reflect the change. 
 Categories that are turned off will have light gray shade on the donut chart while the active categories will have their own colors.
 
@@ -47,7 +47,7 @@ This visualization contains 2 components: line chart and interactive legend. Use
 trending in inflation indicators (as users move along the line, tooltip will display more information). Also, when users hover
 on a line, remaining other lines moves to background and appears in light gray shade so that the category of interest will be highlighted
 and stands out.
-<br>
+<br /><br />
 Each category in the interactive legend can also be turned on and off depending on which indicator the users want to explore.
 This is useful when users would like to compare/contrast between two or more indicators.
 
@@ -56,6 +56,6 @@ This visualization serves as an exploratory tool for users to see the impact of 
 expense category would be as inflation goes up and down. Users enter their current income and expenses to start. As they adjust
 the inflation rate, the savings will go up and down in the interactive chart and the expense amount for each category will change accordingly
 as well.
-<br>
+<br /><br />
 With this tool, users can have a quick guesstimate of their wealth as inflation increases or decreases. They also have a 
 grab of which type of expense category that takes a big portion of their income; hence, make wise decision in curbing these expense if needed.
