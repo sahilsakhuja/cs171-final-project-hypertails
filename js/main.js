@@ -11,6 +11,7 @@ let increaseVis;
 let yearBrushVis;
 let categoryBubbleVis;
 let animatedBarChartVis;
+let allDataArrayBase;
 
 // animation run variables
 let animatedBarChartRun = false;
@@ -78,6 +79,9 @@ function initMainPage(allDataArray) {
     // log data
     // console.log(allDataArray);
 
+
+    allDataArrayBase = allDataArray;
+
     // parse dates as required
     let dateParser = d3.timeParse("%d-%b-%Y");
     data_files.forEach((f) => {
@@ -107,10 +111,12 @@ function initMainPage(allDataArray) {
     );
 
     // load increase vis
-    animatedBarChartVis = new areaVis('animatedBarChartVis',
-        allDataArray[get_file_idx('IMF_all_index')],
-        'Sudan'
-    );
+     animatedBarChartVis = new areaVis('animatedBarChartVis',
+         allDataArray[get_file_idx('IMF_all_index')],
+         'Sudan'
+     );
+
+
 
     yearBrushVis = new brushVis('brushVis',
         allDataArray[get_file_idx('IMF_all_index')],
@@ -160,7 +166,15 @@ function decreaseInflation() {
 }
 
 function replayBarChartAnimation() {
-    animatedBarChartVis.replayBarChart();
+    let currentSvg = document.querySelector("svg");
+    currentSvg.remove();
+
+    animatedBarChartVis = new areaVis('animatedBarChartVis',
+        allDataArrayBase[get_file_idx('IMF_all_index')],
+        'Sudan'
+    );
+    animatedBarChartVis.animateBarChart();
+
 }
 
 // Andrew - need to be incorporated

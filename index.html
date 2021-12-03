@@ -31,7 +31,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<h1 style="font-size: 32px;">Hyperinflation: Is It Really Coming?</h1>
 					<img src="img/Header_Tweets.png" class="shadow-lg" style="width: 95vh;" />
 				</div>
-				<div class="col-3 text-center">
+				<div class="col-3 text-left">
 					<br>
 					<br>
 					<br>
@@ -61,22 +61,14 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<h3>Tell Me About Hyperinflation ....</h3>
 				</div>
 				<div class="col-6 text-center">
-					<h3>Hyperinflation In Sudan: A Prime Example</h3>
+					<h3>Hyperinflation In Sudan: A Prime Example
+						<span class="fas fa-info-circle" style="font-size: 18px; color: grey; align-content: start" , data-toggle="tooltip" data-placement="top"
+							  title="The bar chart displays historical Consumer Price Index (CPI) of Sudan. Hover the bar to see
+								CPI index for each period."></span>
+					</h3>
+
 				</div>
-				<!---<div class="col-8 offset-2">
-					<p>
-						In economics, hyperinflation is very high and typically accelerating inflation.
-						It quickly erodes the real value of the local currency, as the prices of all goods increase. Economists broadly regard a
-						hyperinflationary episode as starting in the month that the monthly inflation rate exceeds 50%,
-						and as ending when the monthly inflation rate drops below 50% and stays that way for at least a year.
-					</p>
-					<p>
-						Below, you can see a small infographic of the key causes of the Hyperinflation. In the visualization on the right, you can
-						observe the growth in Consumer Price Index (CPI) - one of the critical metrics to track inflation - in Sudan which has recently
-						experienced a hyper-inflationary period. A small example to understand this graph more accurately - a typical item which cost $30 in Sudan
-						in 1996, today costs more than $ 13,000!
-					</p>
-				</div>-->
+
 			</div>
 			<div class="row">
 				<div class="col-6 text-center">
@@ -86,10 +78,13 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						Reference: <a href="https://www.thebalance.com/what-is-hyperinflation-definition-causes-and-examples-3306097">thebalance.com</a>
 					</div>
 				</div>
+
 				<div class="col-6 text-end" id="animatedBarChartVis">
-					<button type="button" class="btn btn-success p-2" onclick="replayBarChartAnimation()">Replay</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top" title="Tooltip on top"></span>
+					<!--<button type="button" class="btn btn-success p-2", style="background-color: var(--candy-pink); border: var(--candy-pink)" , onclick="replayBarChartAnimation()">Replay</button>
+					&nbsp;&nbsp;&nbsp;
+					<span class="fas fa-info-circle" data-toggle="tooltip" data-placement="top"
+						  title="The bar chart displays historical Consumer Price Index (CPI) of Sudan. Hover the bar to see
+								CPI index for each period."></span>-->
 				</div>
 			</div>
 		</div>
@@ -105,8 +100,15 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					<!--<h3>
 						The below choropleth map can be used to explore the inflation in different countries over time.
 					</h3>-->
-					<h3>A World Tour Of Inflation </h3>
+					<h3>A World Tour Of Inflation
+						<span class="fas fa-info-circle", style="font-size: 18px; color: grey; align-content: start" data-toggle="tooltip" data-placement="top"
+							  title="Hover the map to explore the average inflation rate for each country over selected time period.
+								Use brushing tool to select preferred time period."></span>
+					</h3>
+					
+					
 				</div>
+				
 
 			</div>
 			<div class="row">
@@ -173,7 +175,16 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<h3>Trending In Top Hyperinflation Countries</h3>
+					<h3>Trending In Top Hyperinflation Countries
+
+						<span class="fas fa-info-circle" style="font-size: 18px; color: grey; align-content: start" data-toggle="tooltip" data-placement="top"
+							  title="Select country from drop-down menu to explore past and current inflation trends
+									and indicators. The line chart displays Consumer Price Index (CPI) and the donut chart reflects
+									CPI components & inflation indicators for the selected country. Use brushing tool for preferred time period.">
+
+						</span>
+
+					</h3>
 					<div style="text-align: center">
 						<p style="font-weight: bold; font-size: 15px">Select Country:
 							<select id='countrySelector' class="custom-select align-self-center">
@@ -200,6 +211,7 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 
 				</div>
 			</div>
+
 			<div class="row">
 
 				<div class="col-8 offset-2" id="brushVis" style="height: 20vh;">
@@ -220,13 +232,14 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 			<div class="row">
 				<div class="col-8 offset-2">
 					<div class="linechart-text">
-						<!--By exploring the commodity inflation across the world we can discover CPI
-						(consumer price index) has steadily increased throughout the years.
-						From this visuaisation we are able to compare each invidiual commodity and see
-						if there are any outliers. The one commodity - transportation is alarming since from
-						2021 onwards it has spiked dramatically causing concerns to hyperflation.-->
-						<h3>Inflation Trending In The US</h3>
+						<h3>Inflation Trending In The US
+							<span class="fas fa-info-circle" style="font-size: 18px; color: grey" data-toggle="tooltip" data-placement="top"
+								  title="Hover the line to explore the trend in each inflation indicator in the US."></span>
+						</h3>
+
+
 					</div>
+
 				</div>
 			</div>
 			<div class="row">
@@ -257,7 +270,15 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 						You can use the "Inflation Rate" configurator below to see the effect of different levels of inflation on Savings
 						and also see, on the right, the amount of expected expenditure in different categories.
 					</p>-->
-					<h3>Let's Get Down To The Numbers ...</h3>
+					<h3>Let's Get Down To The Numbers ...
+
+						<span class="fas fa-info-circle" style="font-size: 18px; color: grey; align-content: start" data-toggle="tooltip" data-placement="top"
+							  title="Enter your current income and expense, adjust inflation rate and see its impact on your expected
+									expense and savings (in aggregate amount and breakdown of each category).">
+
+						</span>
+
+					</h3>
 				</div>
 			</div>
 			<div class="row mt-2">
