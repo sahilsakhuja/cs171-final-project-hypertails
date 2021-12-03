@@ -209,3 +209,44 @@ div{
   margin-bottom: 10px;
 }
 
+
+/*********************************
+
+MEET THE TEAM
+
+*********************************/
+
+
+.card {
+  width:80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.meet-team {
+  padding:50px 100px;
+}
+
+.main-container {
+  height:90vh;
+}
+
+.header-border {
+  width: 100%;
+  margin-bottom: 10px;
+  border: #ea526f solid 3px;
+  border-radius: 10px;
+
+}
+
+.heading > span, .heading-subtitle > span {
+  background-color: white;
+  box-shadow: white 11px 0px 0px,
+              white -13px 0px 0px;
+}
+
+.heading, .heading-subtitle {
+  text-align: center;
+  margin-top: -30px
+}
+
+

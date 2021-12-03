@@ -8,7 +8,7 @@ $('#fullpage').fullpage({
     navigation: true,
     slidesNavigation: true,
     controlArrows: false,
-    anchors: ['firstSection', 'secondSection', 'thirdSection', 'fourthSection', 'fifthSection','sixthSection'],
+    anchors: ['firstSection', 'secondSection', 'thirdSection', 'fourthSection', 'fifthSection','sixthSection', 'seventhSection'],
     afterLoad: function( section, origin, destination, direction){
         if ((section === 'secondSection') && !animatedBarChartRun) {
             setTimeout(function() {
