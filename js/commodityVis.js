@@ -16,13 +16,9 @@ class LineChart {
     initVis() {
         let vis = this;
 
-
-
         vis.margin = {top: 30, right: 30, bottom: 30, left: 30}
         vis.width = 860;
         vis.height = 400;
-
-
         vis.svg = d3.select("#" + vis.parentElement)
             .append("svg")
             .attr("width", vis.width)
@@ -88,10 +84,6 @@ class LineChart {
                 let currentOpacity = d3.selectAll("." + d.categoryName).style("opacity")
                 d3.selectAll("." + d.categoryName).transition().style("opacity", currentOpacity == 1 ? 0.1:1)
             })
-
-
-
-
         vis.wrangleData();
     }
 
@@ -118,7 +110,6 @@ class LineChart {
 
         vis.tooltip = d3.select(".linechart ").append('div')
             .attr('class', 'linechart-tooltip')
-            .style("z-index", "10")
 
         vis.updateVis();
 
@@ -218,12 +209,15 @@ class LineChart {
 
             vis.dot.attr("transform", `translate(${vis.x(cursorDate)},${vis.y(lineValue)})`)
 
+            vis.tooltip.html(`
+            <div style="width:150px; border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
 
-
-
-            vis.tooltip.html(`${parseDate(cursorDate)}` + "<br/>"  + `${lineCategory}`+ "<br/>" + `${lineValue}` )
-            .style("left", (400) + "px")
-            .style("top", (170) + "px")
+            ${parseDate(cursorDate)}` + "<br/>"  + `${lineCategory}`+ "<br/>" + `${lineValue}
+            </div>
+            ` )
+            .style("z-index", 0)
+            .style("left", event.pageX + 30 + "px")
+            .style("top", event.pageY - 120 + "px")
 
 
         }
