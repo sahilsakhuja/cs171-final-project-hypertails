@@ -124,87 +124,6 @@ class donutVis {
             .attr('class', 'legend-group')
             .attr("transform", "translate(0, 0)");
 
-
-        // // draw the brushing component
-        // vis.brushMargin = { top: 0, right: 0, bottom: 20, left: 50 };
-        // vis.brushWidth = vis.width - vis.brushMargin.left,
-        //     vis.brushHeight = vis.brushDimBottom - vis.brushMargin.bottom;
-        //
-        // // init scales
-        // vis.x = d3.scaleTime()
-        //     .range([0, vis.brushWidth])
-        //     .domain(d3.extent(vis.data, (d) => d.Date));
-        //
-        // vis.y = d3.scaleLinear()
-        //     .range([vis.brushHeight, 0])
-        //     .domain(d3.extent(vis.data, (d) => d['Consumer Price Index']));
-        //
-        // // init x & y axis
-        // vis.xAxis = vis.svg.append("g")
-        //     .attr("class", "axis axis-x")
-        //     .attr("transform", "translate(" + vis.brushMargin.left + ", " + (vis.pieHeight + vis.brushHeight) + ")");
-        //
-        // vis.yAxis = vis.svg.append("g")
-        //     .attr("class", "axis axis-y")
-        //     .attr('transform', "translate(" + vis.brushMargin.left + "," + vis.pieHeight + ")");
-        //
-        // vis.brushHolder = vis.svg.append('g')
-        //     .attr('class', 'brush-holder')
-        //     .attr('transform', 'translate('+ vis.brushMargin.left +', ' + vis.pieHeight + ')');
-        //
-        // // init pathGroup
-        // vis.pathGroup = vis.brushHolder
-        //     .append('g')
-        //     .attr('class', 'pathGroup');
-        //
-        // // clip path
-        // vis.pathGroup.append("defs")
-        //     .append("clipPath")
-        //     .attr("id", "clip")
-        //     .append("rect")
-        //     .attr("width", vis.brushWidth)
-        //     .attr("height", vis.brushHeight);
-        //
-        // // init path for CPI
-        // vis.pathOne = vis.pathGroup
-        //     .append('path')
-        //     .attr("class", "pathOne");
-        //
-        // // init path generator
-        // vis.area = d3.area()
-        //     .curve(d3.curveMonotoneX)
-        //     .x(function (d) {
-        //         return vis.x(d.Date);
-        //     })
-        //     .y0(vis.y(0))
-        //     .y1(function (d) {
-        //         return vis.y(d['Consumer Price Index']);
-        //     });
-        //
-        // // draw x & y axis
-        // vis.xAxis.transition().duration(400).call(d3.axisBottom(vis.x));
-        // vis.yAxis.transition().duration(400).call(d3.axisLeft(vis.y).ticks(5));
-        //
-        // // draw the path
-        // vis.pathOne.datum(vis.data)
-        //     .transition().duration(400)
-        //     .attr("d", vis.area)
-        //     .attr("class", 'brush-path')
-        //     .attr("clip-path", "url(#clip)");
-        //
-        // // init brush
-        // vis.brush = d3.brushX()
-        //     .extent([[0, 0], [vis.brushWidth, vis.brushHeight]])
-        //     .on("brush end", function (event) {
-        //         let selectedTimeRange = [vis.x.invert(event.selection[0]), vis.x.invert(event.selection[1])];
-        //         vis.startYear = selectedTimeRange[0].getFullYear();
-        //         vis.endYear = selectedTimeRange[1].getFullYear();
-        //         vis.wrangleData();
-        //     });
-        //
-        // vis.brushHolder
-        //     .call(vis.brush);
-
         vis.wrangleData();
     }
 
@@ -242,9 +161,6 @@ class donutVis {
         // sort the weights in alphabetic order
         vis.filteredWeightsForDisplay = vis.filteredWeightsForDisplay.sort((a, b) => a.key.localeCompare(b.key));
 
-        // console.log(vis.filteredData);
-        // console.log(vis.filteredWeightsForDisplay);
-
         // apply the weights to the filtered data
         vis.displayData = vis.filteredData.map((d) => {
             let new_d = {};
@@ -264,23 +180,8 @@ class donutVis {
                 // }
             });
 
-            // vis.filteredWeights.forEach((w, i) => {
-            //     if (w.active)
-            //         new_d.PieValues.push(
-            //             {
-            //                 'key': w.key,
-            //                 'value': d[w.key] * w.value / 100,
-            //                 'weight_idx': i
-            //             }
-            //         )
-            // });
             return new_d;
         });
-
-        // console.log(vis.filteredData[0]);
-        // console.log(vis.displayData[0]);
-
-        // console.log(vis.displayData);
 
         vis.updateVis();
 
@@ -290,9 +191,6 @@ class donutVis {
         let vis = this;
 
         vis.pieWidth =  ((vis.outerMostRadius - vis.innerMostRadius) / vis.displayData.length) - vis.piePadding; // the
-
-        // // remove all arcs : transition effects are lost!
-        // vis.pieChartGroup.selectAll('.arc').remove();
 
         vis.displayData.forEach((d, i) => {
             let innerRadius = vis.innerMostRadius + vis.pieWidth * i + vis.piePadding * i;
@@ -419,52 +317,6 @@ class donutVis {
 
         vis.legend.selectAll('text')
             .attr('opacity', (d) => vis.weightState[d.key] ? 1 : 0.25);
-
-        // let outerRadius = vis.width / 10;
-        // let innerRadius = vis.width / 12;      // Relevant for donut charts
-        //
-        //
-        // arcs.enter()
-        //     .append("path")
-        //     .merge(arcs)
-        //     .attr("d", vis.arc)
-        //     .attr("fill", (d, idx) => {
-        //         // return vis.circleColors[idx]
-        //         return 'red';
-        //     })
-        //     .attr('class', 'arc')
-        //     .on('mouseover', function(event, d){
-        //
-        //         d3.select(this)
-        //             .attr('stroke-width', '2px')
-        //             .attr('stroke', 'black')
-        //             .attr('fill', 'rgba(173,222,255,0.62)')
-        //
-        //         vis.tooltip
-        //             .style("opacity", 1)
-        //             .style("left", event.pageX + 20 + "px")
-        //             .style("top", event.pageY + "px")
-        //             .html(`<div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-        //      <h3>Arc with index #${d.index}<h3>
-        //      <h4> value: ${d.value}</h4>
-        //      <h4> startAngle: ${d.startAngle}</h4>
-        //      <h4> endAngle: ${d.endAngle}</h4>
-        //      <h4> data: ${JSON.stringify(d.data)}</h4>
-        //  </div>`);
-        //
-        //     }).on('mouseout', function(event, d){
-        //     d3.select(this)
-        //         .attr('stroke-width', '0px')
-        //         .attr("fill", d => d.data.color)
-        //
-        //     vis.tooltip
-        //         .style("opacity", 0)
-        //         .style("left", 0)
-        //         .style("top", 0)
-        //         .html(``);
-        // });
-        //
-        // arcs.exit().remove();
 
     }
 

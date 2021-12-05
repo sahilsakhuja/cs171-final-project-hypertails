@@ -2,6 +2,9 @@
  *
  * Creator: Sahil Sakhuja
  *
+ * Class for brushing component on section 4
+ * Works across 2 components - AreaVis and DonutVis
+ *
  */
 
 class brushVis {

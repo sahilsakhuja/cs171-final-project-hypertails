@@ -1,12 +1,15 @@
 /****************
  *
  * Creator: Sahil Sakhuja
+ * Originally designed as the bubble chart (hence the name)
+ * Now, in revised format - this class draws the bar chart for income / expenses and the legend display to show the categories
  *
  */
 
 /*
  * bubbleVis - Object constructor function
  * @param _parentElement 	-- the HTML element in which to draw the visualization
+ * @param _legendElement 	-- the HTML element in which to draw the information and legend
  * @param _weights			-- the weights file
  * @param _country          -- the name of the country we are using right now
  */
@@ -148,15 +151,6 @@ class bubbleVis {
                 return vis.incomey(d.y)
             });
 
-        // making the expenses bubble chart
-        // vis.colorScale = d3.scaleOrdinal()
-        //     .range(vis.colors)
-        //     .domain(vis.cumulativeWeights);
-        //
-        // vis.categoryScale = d3.scaleOrdinal()
-        //     .range(vis.filteredWeightsForDisplay.map(((w) => w.key)))
-        //     .domain(vis.cumulativeWeights);
-
         vis.categoryScale = d3.scaleThreshold()
             .range(d3.range(vis.filteredWeightsForDisplay.length))
             .domain(vis.cumulativeWeights);
@@ -236,62 +230,6 @@ class bubbleVis {
 
     updateBubbleVis() {
         let vis = this;
-
-        // vis.nodes = d3.range(vis.currentCpi).map(
-        //     (i) => ({
-        //         x: vis.width/4,
-        //         y: vis.height/2,
-        //         i: i,
-        //         r: d3.randomUniform(-1, 1)() + vis.baseRadius
-        //     }));
-        //
-        // vis.sim = d3.forceSimulation(vis.nodes)
-        //     .force("x", d3.forceX(vis.width / 4).strength(0.01))
-        //     .force("y", d3.forceY().y((d) => vis.y(d.i/10)).strength(0.05))
-        //     .force("collide", d3.forceCollide(vis.baseRadius*1.25));
-        //
-        // vis.nodeCircles = vis.collection.selectAll('circle')
-        //     .data(vis.nodes)
-        //     .enter()
-        //     .append('circle')
-        //     .attr('r', (d) => d.r )
-        //     .attr('fill', (d) => vis.colors[vis.categoryScale(d.i)])
-        //     .attr('cx', (d) => d.x)
-        //     .attr('cy', (d) => d.y);
-        //
-        // vis.nodeCircles.on('mouseover', function(event, d) {
-        //
-        //     let category = vis.filteredWeightsForDisplay[vis.categoryScale(d.i)].key;
-        //
-        //     let tooltip_text = '';
-        //     vis.filteredWeightsForDisplay.forEach((w) => {
-        //         if (w.key === category)
-        //             tooltip_text += `<span class="emphasis"><strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}</span><br>`
-        //         else
-        //             tooltip_text += `<strong>${w.key}:</strong> ${vis.currencyFormat(w.value * vis.currentExpense / 100)}<br>`
-        //     })
-        //
-        //     vis.tooltip
-        //         .style("opacity", 1)
-        //         .style("left", event.pageX + 20 + "px")
-        //         .style("top", event.pageY + "px")
-        //         .html(`<div class="tooltip-holder">${tooltip_text}</div>`);
-        // }).on('mouseout', function(event, d){
-        //     vis.tooltip
-        //         .style("opacity", 0)
-        //         .style("left", 0)
-        //         .style("top", 0)
-        //         .html(``);
-        // })
-        //
-        //
-        // vis.sim.on('tick', () => {
-        //     vis.nodeCircles
-        //         .attr('cx', d => d.x)
-        //         .attr('cy', d => d.y)
-        // });
-
-        // console.log(vis.filteredWeightsForDisplay);
 
         vis.legendText = vis.legend.selectAll('.legend-text-inactive')
             .data(vis.filteredWeightsForDisplay);
