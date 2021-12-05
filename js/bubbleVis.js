@@ -291,7 +291,7 @@ class bubbleVis {
         //         .attr('cy', d => d.y)
         // });
 
-        console.log(vis.filteredWeightsForDisplay);
+        // console.log(vis.filteredWeightsForDisplay);
 
         vis.legendText = vis.legend.selectAll('.legend-text-inactive')
             .data(vis.filteredWeightsForDisplay);
