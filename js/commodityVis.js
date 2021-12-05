@@ -210,9 +210,12 @@ class LineChart {
             vis.dot.attr("transform", `translate(${vis.x(cursorDate)},${vis.y(lineValue)})`)
 
             vis.tooltip.html(`
-            <div style="width:150px; border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
-
-            ${parseDate(cursorDate)}` + "<br/>"  + `${lineCategory}`+ "<br/>" + `${lineValue}
+            <div>
+            <strong>Category: </strong>${lineCategory}
+            <br>
+            <strong>Month: </strong>${parseDate(cursorDate)}
+            <br>
+            <strong>CPI: </strong>${lineValue}
             </div>
             ` )
             .style("z-index", 0)

@@ -47,6 +47,7 @@ class MapVis {
         vis.tooltip = d3.select("#mapvisual").append('div')
             .style("position", "absolute")
             .style("z-index", "10")
+            .attr('class', 'tooltip-holder');
 
 
         // Draw the map
@@ -157,9 +158,10 @@ class MapVis {
                 .style("left", event.pageX + 5 + "px")
                 .style("top", event.pageY + "px")
                 .html(`
-     <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
-         <h4 style="color: var(--candy-pink)">${d.properties.name}</h4>
-         <h5 style="color: var(--candy-pink)">Average Percentage:${(d.total.toFixed(2))}%</h5>
+     <div>
+         <strong>Country: </strong>${d.properties.name}
+         <br>
+         <strong>Average Percentage: </strong>${(d.total.toFixed(2))}%
      </div>`);
         }
         var mousemove = function() {
