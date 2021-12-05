@@ -98,7 +98,8 @@ function initMainPage(allDataArray) {
         }
     })
 
-    categoryBubbleVis = new bubbleVis('bubbleVis',
+    categoryBubbleVis = new bubbleVis('pathVis',
+        'legendVis',
         allDataArray[get_file_idx('increaseVis_weights')],
         'UnitedStates'
     )
@@ -115,8 +116,6 @@ function initMainPage(allDataArray) {
          allDataArray[get_file_idx('IMF_all_index')],
          'Sudan'
      );
-
-
 
     yearBrushVis = new brushVis('brushVis',
         allDataArray[get_file_idx('IMF_all_index')],

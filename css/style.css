@@ -135,6 +135,22 @@ SAHIL
   cursor: pointer;
 }
 
+.legend-text-inactive {
+  font-size: 12px;
+}
+
+.legend-text-inactive:hover {
+  font-size: 13px;
+  font-weight: bold;
+  fill: var(--paradise-pink);
+}
+
+.legend-title {
+  font-size: 13px;
+  font-weight: bold;
+  fill: var(--paradise-pink);
+}
+
 .brush-path {
   fill: var(--davys-grey);
   stroke: var(--earth-yellow);

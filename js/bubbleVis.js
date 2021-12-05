@@ -12,8 +12,9 @@
  */
 
 class bubbleVis {
-    constructor(_parentElement, _weights, _country) {
-        this.parentElement = _parentElement;
+    constructor(_pathElement, _legendElement, _weights, _country) {
+        this.pathElement = _pathElement;
+        this.legendElement = _legendElement;
         this.country = _country;
 
         this.weights = _weights[this.country];
@@ -59,27 +60,41 @@ class bubbleVis {
 
         vis.margin = { top: 10, right: 10, bottom: 10, left: 10 };
 
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
-            vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
+        vis.width = document.getElementById(vis.pathElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.height = document.getElementById(vis.pathElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
-        vis.svg = d3.select("#" + vis.parentElement).append("svg")
+        vis.svg = d3.select("#" + vis.pathElement).append("svg")
             .attr("width", vis.width + vis.margin.left + vis.margin.right)
             .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        let topSliderHeight = 0;
+
+        vis.legendWidth = document.getElementById(vis.legendElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.legendHeight = document.getElementById(vis.legendElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
+
+        // SVG drawing area
+        vis.legendSvg = d3.select("#" + vis.legendElement).append("svg")
+            .attr("width", vis.legendWidth + vis.margin.left + vis.margin.right)
+            .attr("height", vis.legendHeight + vis.margin.top + vis.margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+
+
+        let topSliderHeight = 20;
         let topIncomeTextHeight = 50;
         let contentHeight = vis.height - topSliderHeight;
 
         // placeholder for a slider
 
-        vis.income = vis.svg.append('g')
-            .attr('transform', 'translate(' + vis.width/8 + ', '+ topSliderHeight +')');
+        vis.income = vis.legendSvg.append('g')
+            // .attr('transform', 'translate(' + vis.width/8 + ', '+ topSliderHeight +')');
+            .attr('transform', 'translate(0, '+ topSliderHeight +')');
 
-        vis.collection = vis.svg.append('g')
-            .attr('transform', 'translate('+ vis.width/2 +', '+ topSliderHeight +')');
+        vis.collection = vis.legendSvg.append('g')
+            // .attr('transform', 'translate('+ vis.width/2 +', '+ topSliderHeight +')');
+            .attr('transform', 'translate(0, ' + (topSliderHeight + topIncomeTextHeight) + ')');
 
         // making the income path
         // putting the income as text
@@ -101,7 +116,7 @@ class bubbleVis {
 
         // keep x-axis in the middle so that we can also have a negative path
         let x_axis_pt = contentHeight / 2;
-        let income_width = vis.width / 4;
+        let income_width = vis.width / 2;
 
         vis.incomex = d3.scaleLinear()
             .range([0, income_width])
@@ -111,7 +126,7 @@ class bubbleVis {
             .range([x_axis_pt, topIncomeTextHeight]);
 
         // init pathGroup
-        vis.pathGroup = vis.income
+        vis.pathGroup = vis.svg
             .append('g')
             .attr('class', 'pathGroup');
 
@@ -154,8 +169,15 @@ class bubbleVis {
         // draw the legend
         vis.legend = vis.collection.append('g')
             .attr('class', 'legend-group')
-            .attr("transform", "translate(0, 0)")
+            .attr("transform", "translate(0, 20)")
             .attr('opacity', 0);
+
+        // add a title to the legend
+        vis.legend.append('text')
+            .attr('class', 'legend-title')
+            .text('Category-wise expected expenses')
+            .attr('x', 2)
+            .attr('y', 0);
 
         vis.legendRects = vis.legend.selectAll('rect')
             .data(vis.filteredWeightsForDisplay)
@@ -165,12 +187,12 @@ class bubbleVis {
             .attr('width', 10)
             .attr('height', 10)
             .attr('x', 2)
-            .attr('y', (d, i) => i * 15)
+            .attr('y', (d, i) => (i+1) * 15) // i+1 => to leave space for the title
             .attr('fill', (d, i) => vis.colors[i]);
 
-        vis.tooltip = d3.select('body').append('div')
-            .attr('class', "tooltip")
-            .attr('id', 'pieTooltip')
+        // vis.tooltip = d3.select('body').append('div')
+        //     .attr('class', "tooltip")
+        //     .attr('id', 'pieTooltip')
 
         vis.updateAreaVis();
         vis.updateBubbleVis();
@@ -271,15 +293,15 @@ class bubbleVis {
 
         console.log(vis.filteredWeightsForDisplay);
 
-        vis.legendText = vis.legend.selectAll('text')
+        vis.legendText = vis.legend.selectAll('.legend-text-inactive')
             .data(vis.filteredWeightsForDisplay);
 
         vis.legendText.enter()
             .append('text')
-            .attr('class', 'legend-text')
+            .attr('class', 'legend-text-inactive')
             .merge(vis.legendText)
             .attr('x', 15)
-            .attr('y', (d, i) => i * 15 + 10)
+            .attr('y', (d, i) => (i+1) * 15 + 10) // i+1 => to leave space for the title
             .text((d) => {
                 // if (d.key.length > 30)
                 //     return d.key.substr(0, 30) + '... : ' + vis.currencyFormat(d.value * vis.currentExpense / 100);

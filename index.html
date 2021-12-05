@@ -309,17 +309,20 @@ Special Mention: Section based scrolling implemented by Andrew Ting
 					</p>
 				</div>-->
 			</div>
-			<div class="col-4 text-center">
-				<p>Inflation Rate:</p>
-				<p>
-					<button type="button" class="btn btn-success" onclick="decreaseInflation()">-</button>
-					<input type="hidden" id="inflationAmount" value=0><span class="" id="inflationAmountText">0.00%</span>
-					<button type="button" class="btn btn-danger" onclick="increaseInflation()">+</button>
+			<div class="row">
+				<div class="col-4 offset-2" id="pathVis" style="height: 100vh;">
 
-				</p>
-			</div>
-			<div class="row mt-5">
-				<div class="col-12" id="bubbleVis" style="height: 100vh;">
+				</div>
+				<div class="col-6 text-left" style="height: 100vh;">
+					<br><br>
+					<p>Inflation Rate:</p>
+					<p>
+						<button type="button" class="btn btn-success" onclick="decreaseInflation()">-</button>
+						<input type="hidden" id="inflationAmount" value=0><span class="" id="inflationAmountText">0.00%</span>
+						<button type="button" class="btn btn-danger" onclick="increaseInflation()">+</button>
+
+					</p>
+					<div id="legendVis" style="height: 75vh;"></div>
 
 				</div>
 			</div>
