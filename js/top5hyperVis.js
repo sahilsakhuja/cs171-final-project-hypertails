@@ -103,30 +103,6 @@ class topHyperVis {
 
         vis.displayData = vis.filteredData.sort((a, b) => a.Date - b.Date);
 
-        // let filteredData = [];
-        //
-        // // Convert strings to datetime object and float
-        // for (let item of vis.inflation) {
-        //     let year = parseTime(item["Year"]);
-        //     let angola = parseFloat(parseFloat(item['Angola']).toFixed(2));
-        //     let turkey = parseFloat(parseFloat(item['Turkey']).toFixed(2));
-        //     let bulgaria = parseFloat(parseFloat(item['Bulgaria']).toFixed(2));
-        //     let sudan = parseFloat(parseFloat(item['Sudan']).toFixed(2));
-        //     let zimbabwe = parseFloat(parseFloat(item['Zimbabwe']).toFixed(2));
-        //
-        //     let newItem = {
-        //         "year": year,
-        //         "angola": angola,
-        //         "turkey": turkey,
-        //         "bulgaria": bulgaria,
-        //         "sudan": sudan,
-        //         "zimbabwe": zimbabwe
-        //     }
-        //     filteredData.push(newItem)
-        // };
-        //
-        // vis.filteredInflation = filteredData;
-
         vis.updateVis()
 
     }
@@ -136,11 +112,12 @@ class topHyperVis {
 
         let vis = this;
 
-        // Update domain
+        // Update x domain
         vis.x.domain(d3.extent(vis.displayData.map(function (d){
             return d.Date;
         })))
 
+        // Update y domain
         vis.y.domain(d3.extent(vis.displayData.map(function (d) {
             return d['Consumer Price Index'];
         })));
@@ -174,7 +151,7 @@ class topHyperVis {
         vis.circles.exit().remove()
 
 
-        // Update y-axis
+        // Update y-axis and add transition
         vis.svg.select(".y-axis")
             .transition()
             .duration(2000)
