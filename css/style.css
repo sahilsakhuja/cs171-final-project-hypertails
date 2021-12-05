@@ -209,3 +209,12 @@ div{
   margin-bottom: 10px;
 }
 
+.info-style {
+  font-size: 18px;
+  color: grey;
+  align-content: start;
+}
+
+.tooltip {
+  font-size: 12px;
+}
