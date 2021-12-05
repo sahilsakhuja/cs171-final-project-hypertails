@@ -66,7 +66,7 @@ class MapVis {
 	var svgLegend = d3.select("#" + vis.parentElement).append('svg')
     .style("position", "absolute")
     .style("z-index", "10")
-    .attr("transform", "translate(-900," + vis.height + ")")
+    .attr("transform", "translate(" + -(vis.width/2 + 100) + "," + vis.height + ")")
 
     
 	var defs = vis.svg.append('defs');
