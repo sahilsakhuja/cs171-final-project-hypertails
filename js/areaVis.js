@@ -111,8 +111,8 @@ class areaVis {
 
         // tooltip
         vis.tooltip = d3.select("body").append('div')
-            .attr('class', "tooltip")
-            .attr('id', 'barTooltip')
+            .attr('class', "tooltip tooltip-holder")
+            .attr('id', 'barTooltip');
 
         /*// Add right y-axis text
         vis.svg.append("text")
@@ -338,8 +338,8 @@ class areaVis {
                     .style("left", event.pageX + 5 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 8px">
-             <h5 style="color: var(--candy-pink)">CPI: ${d['Consumer Price Index']}<h5>                        
+         <div>
+             <strong>CPI: </strong>${d['Consumer Price Index']}                 
          </div>`);
 
             })
