@@ -33,13 +33,6 @@ mapBrushVis.prototype.initVis = function () {
         .attr("width", vis.width)
         .attr("height", vis.height);
 
-    // add title
-    // vis.svg.append('g')
-    //     .attr('class', 'title')
-    //     .append('text')
-    //     .text('World Map Brush')
-    //     .attr('transform', `translate(${vis.width / 2}, 0)`)
-    //     .attr('text-anchor', 'middle');
 
     // init scales
     vis.x = d3.scaleTime().range([0, vis.width]);
@@ -94,10 +87,7 @@ mapBrushVis.prototype.initVis = function () {
                 .toISOString()
                 .split("T")[0].slice(0,4);
 
-            myMapVis.wrangleData(); // TODO: Uncomment when implemented
-            // myDataTable.wrangleData();
-            // myBarVisOne.wrangleData(); // TODO: Uncomment when implemented
-            // myBarVisTwo.wrangleData(); // TODO: Uncomment when implemented
+            myMapVis.wrangleData();
 
         });
 

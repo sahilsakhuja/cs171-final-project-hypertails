@@ -16,6 +16,7 @@ class LineChart {
     initVis() {
         let vis = this;
 
+        // Initialize drawing area
         vis.margin = {top: 30, right: 30, bottom: 30, left: 30}
         vis.width = 860;
         vis.height = 400;
@@ -30,6 +31,7 @@ class LineChart {
             .attr("height", 350);
 
 
+        // Scale Y & X Axis
         let yValues = vis.data.categories.map((category) => category.values)
 
         vis.x = d3.scaleTime()
@@ -40,18 +42,18 @@ class LineChart {
             .domain(d3.extent(yValues.flat()))
             .range([vis.height - vis.margin.bottom, vis.margin.top])
 
-
+        // X axis setup
         vis.svg.append("g")
             .attr("transform", `translate(0,${vis.height - vis.margin.bottom})`)
             .call(d3.axisBottom(vis.x))
 
-        // Y axis
-        vis.gYAxis = vis.svg
+        // Y axis setup
+        vis.yAxis = vis.svg
             .append("g")
             .attr("transform", `translate(${vis.margin.left},0)`)
             .call(d3.axisLeft(vis.y))
 
-        vis.gYAxis
+        vis.yAxis
             .append("text")
             .attr("x", -15)
             .attr("y", 20)
@@ -59,22 +61,24 @@ class LineChart {
             .attr("text-anchor", "start")
             .text("CPI");
 
+        // Legend setup
         vis.legend = vis.legendkey.append('g')
             .attr('font-family', 'sans-serif');
 
-        vis.cell = vis.legend.selectAll('g')
+        vis.legendColor = vis.legend.selectAll('g')
             .data(vis.data.categories)
             .join('g');
 
         vis.color = d3.scaleOrdinal(d3.schemePaired)
 
-        vis.cell.append('rect')
+        // Draw legend and color setup
+        vis.legendColor.append('rect')
             .attr('fill', (d) => { return vis.color(d)})
             .attr('y', (d,i)=> {return 30*i})
             .attr('width', 15)
             .attr('height', 15)
 
-        vis.cell.append('text')
+        vis.legendColor.append('text')
             .attr('x', ()=> {return 20})
             .attr('y', (d,i)=> {return 30*i +10})
             .attr("class", function(d){ return d.categoryName })
@@ -90,37 +94,33 @@ class LineChart {
     wrangleData() {
         let vis = this;
 
-
-        vis.cell.on("click", (d,i) => {
+        // Toggle data on and off on tooltip click
+        vis.legendColor.on("click", (d,i) => {
 
             let allSelectedCategory = []
             vis.data.categories.forEach((x) => {
                 allSelectedCategory.push(x.category)
             })
 
-            console.log(allSelectedCategory)
             if (allSelectedCategory.includes(i.category)) {
                 let updatedData = vis.data.categories.filter((y) =>y.category !== i.category)
                 vis.data.categories = updatedData
             } else {
                 vis.data.categories.push(i)
             }
-
         })
 
+        // Renew tooltip after data change
         vis.tooltip = d3.select(".linechart ").append('div')
             .attr('class', 'linechart-tooltip')
 
         vis.updateVis();
-
     }
-
-
 
     updateVis() {
         var vis = this;
 
-
+        // Draw category path
         vis.path = vis.svg
             .append("g")
             .attr("fill", "none")
@@ -137,77 +137,76 @@ class LineChart {
                     (d.values)
             })
 
-        vis.cell.on("mouseover", (p,r) => {
+        // Highlight category color on hover legend
+        vis.legendColor.on("mouseover", (p,r) => {
                 vis.path.attr("stroke", (d,i) => {
                     return d.category === r.category ? vis.color(d) : "#ddd"
                 })
-                vis.cell.style("cursor", "pointer")
+                vis.legendColor.style("cursor", "pointer")
 
             }
         )
-        vis.cell.on("mouseout", () => {
+
+        // Unhighlight category color on hover legend
+        vis.legendColor.on("mouseout", () => {
             vis.path.attr("stroke", (d,i) => { return vis.color(d) })
         });
 
+        // Cursor tooltip setup
+        vis.tooltipPoint = vis.svg.append("g").attr("display", "none");
+        vis.tooltipPoint.append("circle").attr("r", 2.5);
+        vis.tooltipPoint.append("text").attr("text-anchor", "middle");
 
-
-
-        vis.dot = vis.svg.append("g").attr("display", "none");
-
-        vis.dot.append("circle").attr("r", 2.5);
-
-        vis.dot.append("text").attr("text-anchor", "middle");
-
-
-        vis.svg.on("mouseenter", () => {
-            vis.path.style("mix-blend-mode", null).attr("stroke", "#ddd")
-            vis.dot.attr("display", null)
+        // Show/Remove tooltip on enter 
+        vis.svg
+            .on("mouseenter", () => {
+            vis.path.attr("stroke", "#ddd")
             vis.tooltip.style("display", null);
-
-
+            vis.tooltipPoint.attr("display", null)
         })
             .on("mouseleave", () => {
                 vis.path.style("mix-blend-mode", "multiply").attr("stroke", 'null');
                 vis.path.attr("stroke", (d,i) => { return vis.color(d) })
-                vis.dot.attr("display", "none");
+                vis.tooltipPoint.attr("display", "none");
                 vis.tooltip.style("display", "none");
 
             });
 
 
-
+        // Alter data and point on cursor move
         vis.svg.on("mousemove", moved)
 
         function moved(event) {
             let parseDate = d3.utcFormat("%b %Y")
+
+            // Get point location
             const pointerX = d3.pointer(event)[0]
             const pointerY = d3.pointer(event)[1]
 
-
+            // Translate to x and y coordinate based on pointer location
             const xDate = vis.x.invert(pointerX);
             const yValue = vis.y.invert(pointerY);
+
+            // Get data based on where the pointer is
             const i = d3.bisectCenter(vis.data.allDates, xDate);
-
-
             const cursorDate = vis.data.allDates[i];
-
             const cursorPriceIndex =  vis.data.categories.map((d) => d.values[i]);
+
+            // Find closest line and grab determine the category and its values
             const closestCategoryLine = cursorPriceIndex.map((d) => Math.abs(d - yValue))
             const categoryLineIndex = d3.leastIndex(closestCategoryLine);
-
             const lineCategory = vis.data.categories[categoryLineIndex].category;
             const lineValue = vis.data.categories[categoryLineIndex].values[i];
 
-
+            // Highlight closest line to cursor 
             vis.path
                 .attr("stroke", (d) => d.category === lineCategory ? vis.color(d) : "#ddd")
                 .attr("stroke-opacity", 1)
                 .filter((d) => d.category === lineCategory)
                 .raise();
 
-
-
-            vis.dot.attr("transform", `translate(${vis.x(cursorDate)},${vis.y(lineValue)})`)
+            // Tooltip 
+            vis.tooltipPoint.attr("transform", `translate(${vis.x(cursorDate)},${vis.y(lineValue)})`)
 
             vis.tooltip.html(`
             <div>
@@ -221,12 +220,7 @@ class LineChart {
             .style("z-index", 0)
             .style("left", event.pageX + 30 + "px")
             .style("top", event.pageY - 120 + "px")
-
-
         }
-
-
     }
-
 }
 
