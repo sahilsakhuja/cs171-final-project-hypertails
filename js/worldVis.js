@@ -156,18 +156,16 @@ class MapVis {
                         <strong>Average Percentage: </strong>${(d.total.toFixed(2))}%
                     </div>`);
         }
-  
 
-        // Set the color of each country based on new data from brushing component
-        // Reset mouseover mousem
+        // set the color of each country
         vis.svg
             .selectAll("path")
-            .attr("fill", function (d) {
+            .attr("fill",  (d) =>  {
                 d.total = data.get(d.id) || 0;
                 return vis.colorScale(d.total);
             })
             .style("stroke", "transparent")
-            .attr("class", function(d){ return d.id } )
+            .attr("class", (d) => { return d.id } )
             .style("opacity", .8)
             .on("mouseover",  function(event,d){
                 mouseover(event,d)
@@ -179,7 +177,8 @@ class MapVis {
                 vis.tooltip.style("display", null);
 
             })
-            .on("mousemove", mousemove)
+            .on("mousemove", function() {
+            })
             .on("mouseleave", function(d) {
                 d3.select(this)
                     .transition()
